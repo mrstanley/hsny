@@ -15,11 +15,14 @@ export default class App extends Component<AppProps, AppState> {
         super(props);
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
-            plus.navigator.setStatusBarStyle("dark");
-            plus.navigator.setFullscreen(false);
             Utils.hideScroll();
             this.login();
         });
+        mui.later(() => {
+            plus.navigator.setStatusBarStyle("dark");
+            plus.navigator.setFullscreen(false);
+            plus.navigator.closeSplashscreen();
+        }, 3000);
     }
     login() {
         let userInfo = Utils.getSettings("userInfo");
