@@ -31,10 +31,10 @@ export default class App extends Component<AppProps, AppState> {
             plus.navigator.setStatusBarStyle("dark");
             plus.navigator.setFullscreen(false);
             plus.navigator.closeSplashscreen();
-        }, 1000);
+        }, 3000);
         Utils.setImmersed();
         this.listener("login", () => {
-            alert("登录了");
+            console.log("登录了");
         });
     }
     render(props: AppProps, state: AppState) {

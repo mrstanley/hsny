@@ -31,7 +31,6 @@ export function notice(code, content) {
 export function fetch(type, url, params) {
     type = type.toLocaleLowerCase();
     return new Promise((resolve, reject) => {
-        let request = null;
         mui.ajax(url, {
             data: params,
             dataType: 'json',
@@ -42,8 +41,9 @@ export function fetch(type, url, params) {
                 Authorization: Utils.getCookie("authorization") || ""
             },
             success: (res) => {
-                let { data, errorCode, msg } = res.data;
-                if (!errorCode) {
+                debugger;
+                let { data, errorCode, msg } = res;
+                if (errorCode == 0) {
                     resolve(data);
                 } else {
                     notice(errorCode, msg);
@@ -51,17 +51,18 @@ export function fetch(type, url, params) {
                 }
             },
             error: (error, type, errorThrown) => {
+                debugger;
                 if (error.response) {
                     let errorStatusCode = error.response.status;
                     let statusText = error.response.statusText;
                     if (typeof error.response.data == "object") {
-                        let { data, errorCode, msg } = error.response.data;
+                        let { data, errorCode, msg } = error.response;
                         errorCode ? notice(errorCode, msg) : notice(500, null);
                     } else {
                         notice(errorStatusCode, null);
                     }
                 } else {
-                    notice(504, null);
+                    notice(error.status || 504, null);
                 }
                 reject(error);
             }

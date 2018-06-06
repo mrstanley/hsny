@@ -12,6 +12,7 @@ interface AppState {
     password: string;
     userAccount: string;
     isLogin: boolean;
+    showPws: boolean;
 }
 
 export default class App extends Component<AppProps, AppState> {
@@ -23,7 +24,8 @@ export default class App extends Component<AppProps, AppState> {
         this.state = {
             password: "",
             userAccount: "",
-            isLogin: false
+            isLogin: false,
+            showPws: false
         };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init();
@@ -35,29 +37,35 @@ export default class App extends Component<AppProps, AppState> {
         this.setState({ isLogin: true });
         Server.login({
             password: Base64.encode(this.state.password),
-            userAccount: "lixiaolin"
+            userAccount: this.state.userAccount
         }).then((data: any) => {
-            mui.toast("登录成功");
             Utils.setCookie("authorization", data.authorization);
             Utils.setSettings("userInfo", data);
             mui.fire(this.view.opener(), "login");
             this.setState({ isLogin: true });
             mui.later(() => {
-                plus.nativeUI.closeWaiting();
                 mui.back();
+                plus.nativeUI.closeWaiting();
             }, 800);
         }).catch(() => {
-            mui.toast("登录失败");
             this.setState({ isLogin: true });
             plus.nativeUI.closeWaiting();
         })
+        return false;
+    }
+    handleEnter(ev: any) {
+        if (ev.keyCode == 13) {
+            this.handleLogin(ev);
+            ev.target.blur();
+        }
+        return false;
     }
     componentDidMount() {
         Utils.setImmersed();
         Utils.handleBack();
     }
     render(props: AppProps, state: AppState) {
-        let { userAccount, password } = state;
+        let { userAccount, password, showPws } = state;
         return (
             <div className="app-container login">
                 <div className="login-form">
@@ -67,11 +75,12 @@ export default class App extends Component<AppProps, AppState> {
                     <form>
                         <div className="item">
                             <i className="iconfont icon-Accountnumber"></i>
-                            <input value={userAccount} onInput={linkState(this, 'userAccount')} type="text" placeholder="请输入账号" />
+                            <input value={userAccount} onInput={linkState(this, 'userAccount')} type="email" placeholder="请输入账号" />
                         </div>
                         <div className="item">
                             <i className="iconfont icon-Password"></i>
-                            <input value={password} onInput={linkState(this, 'password')} type="password" placeholder="请输入密码" />
+                            <input value={password} onKeyUp={this.handleEnter.bind(this)} onInput={linkState(this, 'password')} type={showPws ? "email" : "password"} placeholder="请输入密码" />
+                            <i className={showPws ? "eye iconfont icon-eye1" : "eye iconfont icon-eye"} {...{ onTap: () => this.setState({ showPws: !this.state.showPws }) }}></i>
                         </div>
                     </form>
                     <a href="javascript:;" className="loginBtn" {...{ onTap: (ev) => this.handleLogin(ev) }}>登录</a>
