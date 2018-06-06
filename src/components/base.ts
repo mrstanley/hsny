@@ -1,7 +1,6 @@
 declare const plus, mui, require;
 
 export default {
-    view: null,
     /**
      * view 事件监听
      *

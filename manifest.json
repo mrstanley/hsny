@@ -85,7 +85,6 @@
         "Barcode": {
             "description": "管理二维码扫描插件"
         },
-
         "Speech": {
             "description": "管理语音识别插件"
         },
@@ -114,7 +113,7 @@
         "splashscreen": {
             "autoclose": true,
             "waiting": false,
-            "delay": "3000"
+            "delay": "4000"
         },
         "popGesture": "close",
         "runmode": "liberate",

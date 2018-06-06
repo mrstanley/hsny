@@ -14,17 +14,20 @@ export default class App extends Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.mixins.forEach(m => Object.assign(this, m));
-        this.init();
+        this.init(() => {
+            plus.navigator.setStatusBarStyle("light");
+        });
     }
     componentDidMount() {
         Utils.setImmersed();
+        Utils.handleBack();
     }
     render(props: AppProps, state: AppState) {
         return (
             <div className="app-container">
                 <header id="header" class="mui-bar mui-bar-transparent">
                     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-                    <h1 class="mui-title">导航栏</h1>
+                    <h1 class="mui-title">登录</h1>
                 </header>
             </div>
         );

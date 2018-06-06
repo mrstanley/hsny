@@ -104,7 +104,7 @@ export default {
      * @description 打开新页面如果页面已经打开，则显示页面
      * @param {String|Object} 要打开页面的ID
      */
-    , showPage(page: string, param: any = {}, showedCB?): void {
+    , openPage(page: string, param: any = {}, showedCB?): void {
         const tmp = plus.webview.getWebviewById(page);
         const ios = plus.os.name.toLowerCase() === "ios";
         const moveType = ios ? "pop-in" : "slide-in-right";
@@ -112,11 +112,11 @@ export default {
             tmp.show(moveType, 250, showedCB);
         } else {
             const options: any = {
-                url: "index.html",
+                url: "../" + page + "/index.html",
                 id: param.createNew ? "new_" + page : page,
                 show: {
                     aniShow: moveType,
-                    duration: 200,
+                    duration: 250,
                     event: "loaded"
                 },
                 styles: {
@@ -130,6 +130,19 @@ export default {
             };
             param.createNew && (options.createNew = true);
             mui.openWindow(options);
+        }
+    }
+    , handleBack(cb?: Function) {
+        let back = mui.back;
+        let style = "light";
+        mui.back = () => {
+            if (plus.webview.currentWebview().from.barStyle == "dark")
+                style = "dark"
+            mui.later(() => {
+                plus.navigator.setStatusBarStyle(style);
+            }, 200);
+            cb && cb();
+            back();
         }
     }
 }

@@ -17,8 +17,15 @@ export default class App extends Component<AppProps, AppState> {
         this.init(() => {
             plus.navigator.setStatusBarStyle("dark");
             plus.navigator.setFullscreen(false);
-            plus.navigator.closeSplashscreen();
+            this.login();
         });
+    }
+    login() {
+        let userInfo = Utils.getSettings("userInfo");
+        if (!userInfo) {
+            mui.toast("请登录");
+            Utils.openPage("login", { from: { barStyle: "dark", name: "main" } });
+        }
     }
     componentDidMount() {
         Utils.setImmersed();
