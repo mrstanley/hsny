@@ -1,0 +1,69 @@
+.login {
+    background-color: #ffffff;
+    height: 100%;
+    overflow: hidden;
+    .login-form {
+        width: 6.2rem;
+        margin: 2.52rem auto 0;
+        .logo {
+            width: 1.44rem;
+            height: 1.44rem;
+            margin: 0 auto;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        form {
+            margin-top: 1.35rem;
+            margin-bottom: 1.2rem;
+            .item {
+                padding: .26rem;
+                position: relative;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                line-height: .5rem;
+                &::before {
+                    position: absolute;
+                    content: " ";
+                    height: 0.02rem;
+                    background-color: #eeeeee;
+                    width: 100%;
+                    bottom: 0;
+                }
+                .iconfont {
+                    color: #5CC166;
+                    font-weight: bold;
+                    width: .5rem;
+                    text-align: center;
+                    font-size: .38rem;
+                    margin-left: .2rem;
+                }
+                input {
+                    border: 0 none;
+                    flex: 1;
+                    padding: 0 .4rem;
+                    margin: 0;
+                    color: #333333;
+                    &::-webkit-input-placeholder {
+                        color: #cdcdcd;
+                        font-size: .36rem;
+                    }
+                }
+            }
+        }
+        .loginBtn {
+            display: block;
+            margin: 0 auto;
+            width: 5.9rem;
+            height: 0.88rem;
+            line-height: 0.88rem;
+            text-align: center;
+            background: -webkit-linear-gradient(left, #B1E34D, #5CC166);
+            background: linear-gradient(to right, #B1E34D, #5CC166);
+            color: #ffffff;
+            border-radius: .44rem;
+        }
+    }
+}

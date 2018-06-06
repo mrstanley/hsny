@@ -17,6 +17,7 @@ export default class App extends Component<AppProps, AppState> {
         this.init(() => {
             plus.navigator.setStatusBarStyle("dark");
             plus.navigator.setFullscreen(false);
+            Utils.hideScroll();
             this.login();
         });
     }

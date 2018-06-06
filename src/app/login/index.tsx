@@ -24,11 +24,23 @@ export default class App extends Component<AppProps, AppState> {
     }
     render(props: AppProps, state: AppState) {
         return (
-            <div className="app-container">
-                <header id="header" class="mui-bar mui-bar-transparent">
-                    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-                    <h1 class="mui-title">登录</h1>
-                </header>
+            <div className="app-container login">
+                <div className="login-form">
+                    <div className="logo">
+                        <img src={require("../../assets/images/192x192.png")} alt="华盛农业"/>
+                    </div>
+                    <form>
+                        <div className="item">
+                            <i className="iconfont icon-Accountnumber"></i>
+                            <input type="text" placeholder="请输入账号" />
+                        </div>
+                        <div className="item">
+                            <i className="iconfont icon-Password"></i>
+                            <input type="text" placeholder="请输入密码" />
+                        </div>
+                    </form>
+                    <a href="" className="loginBtn">登录</a>
+                </div>
             </div>
         );
     }
