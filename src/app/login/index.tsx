@@ -2,7 +2,7 @@ declare const plus, mui, require;
 
 import { h, render, Component } from "preact";
 import Mixins from "../../components/base";
-import { setImmersed } from "../../utils";
+import Utils from "../../utils";
 
 interface AppProps { }
 interface AppState { }
@@ -17,7 +17,7 @@ export default class App extends Component<AppProps, AppState> {
         this.init();
     }
     componentDidMount() {
-        setImmersed()
+        Utils.setImmersed();
     }
     render(props: AppProps, state: AppState) {
         return (

@@ -2,7 +2,7 @@ declare const plus, mui, require;
 
 import { h, render, Component } from "preact";
 import Mixins from "../../components/base";
-import { setImmersed } from "../../utils";
+import Utils from "../../utils";
 
 interface AppProps { }
 interface AppState { }
@@ -21,7 +21,7 @@ export default class App extends Component<AppProps, AppState> {
         });
     }
     componentDidMount() {
-        setImmersed()
+        Utils.setImmersed();
     }
     render(props: AppProps, state: AppState) {
         return (
@@ -73,8 +73,8 @@ export default class App extends Component<AppProps, AppState> {
                         </li>
                         <li class="mui-table-view-cell mui-media mui-col-xs-6"><a href="javascript:;">
                             <span class="iconfont icon-more"></span>
-		                    <div class="mui-media-body">敬请期待</div></a>
-                        </li>                      
+                            <div class="mui-media-body">敬请期待</div></a>
+                        </li>
                     </ul>
                 </div>
             </div>
