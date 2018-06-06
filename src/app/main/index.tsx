@@ -18,21 +18,24 @@ export default class App extends Component<AppProps, AppState> {
             Utils.hideScroll();
             this.login();
         });
-        mui.later(() => {
-            plus.navigator.setStatusBarStyle("dark");
-            plus.navigator.setFullscreen(false);
-            plus.navigator.closeSplashscreen();
-        }, 3000);
     }
     login() {
-        let userInfo = Utils.getSettings("userInfo");
-        if (!userInfo) {
+        let authorization = Utils.getCookie("authorization");
+        if (!authorization) {
             mui.toast("请登录");
             Utils.openPage("login", { from: { barStyle: "dark", name: "main" } });
         }
     }
     componentDidMount() {
+        mui.later(() => {
+            plus.navigator.setStatusBarStyle("dark");
+            plus.navigator.setFullscreen(false);
+            plus.navigator.closeSplashscreen();
+        }, 1000);
         Utils.setImmersed();
+        this.listener("login", () => {
+            alert("登录了");
+        });
     }
     render(props: AppProps, state: AppState) {
         return (

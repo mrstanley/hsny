@@ -1,26 +1,63 @@
 declare const plus, mui, require;
 
 import { h, render, Component } from "preact";
+import linkState from 'linkstate';
+import { Base64 } from 'js-base64';
 import Mixins from "../../components/base";
 import Utils from "../../utils";
+import Server from "../../server";
 
 interface AppProps { }
-interface AppState { }
+interface AppState {
+    password: string;
+    userAccount: string;
+    isLogin: boolean;
+}
 
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
-    listener: Function;
+    view
     constructor(props: AppProps) {
         super(props);
+        this.state = {
+            password: "",
+            userAccount: "",
+            isLogin: false
+        };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init();
-        mui.init();
+    }
+    handleLogin(ev: Event) {
+        if (!this.state.userAccount || !this.state.password)
+            return mui.toast("请输入账号或密码");
+        plus.nativeUI.showWaiting("登录中...");
+        this.setState({ isLogin: true });
+        Server.login({
+            password: Base64.encode(this.state.password),
+            userAccount: "lixiaolin"
+        }).then((data: any) => {
+            mui.toast("登录成功");
+            Utils.setCookie("authorization", data.authorization);
+            Utils.setSettings("userInfo", data);
+            mui.fire(this.view.opener(), "login");
+            this.setState({ isLogin: true });
+            mui.later(() => {
+                plus.nativeUI.closeWaiting();
+                mui.back();
+            }, 800);
+        }).catch(() => {
+            mui.toast("登录失败");
+            this.setState({ isLogin: true });
+            plus.nativeUI.closeWaiting();
+        })
     }
     componentDidMount() {
         Utils.setImmersed();
+        Utils.handleBack();
     }
     render(props: AppProps, state: AppState) {
+        let { userAccount, password } = state;
         return (
             <div className="app-container login">
                 <div className="login-form">
@@ -30,14 +67,14 @@ export default class App extends Component<AppProps, AppState> {
                     <form>
                         <div className="item">
                             <i className="iconfont icon-Accountnumber"></i>
-                            <input type="text" placeholder="请输入账号" />
+                            <input value={userAccount} onInput={linkState(this, 'userAccount')} type="text" placeholder="请输入账号" />
                         </div>
                         <div className="item">
                             <i className="iconfont icon-Password"></i>
-                            <input type="password" placeholder="请输入密码" />
+                            <input value={password} onInput={linkState(this, 'password')} type="password" placeholder="请输入密码" />
                         </div>
                     </form>
-                    <a href="" className="loginBtn">登录</a>
+                    <a href="javascript:;" className="loginBtn" {...{ onTap: (ev) => this.handleLogin(ev) }}>登录</a>
                 </div>
             </div>
         );

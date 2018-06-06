@@ -10,7 +10,6 @@ interface AppState { }
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
-    listener: Function;
     constructor(props: AppProps) {
         super(props);
         this.mixins.forEach(m => Object.assign(this, m));
