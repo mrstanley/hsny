@@ -1,0 +1,64 @@
+.main {
+    background-color: #f6f6f6;
+    .app-header {
+        height: .9rem;
+        background-color: rgba(92, 193, 102, 0);
+        width: 100%;
+        overflow: hidden;
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title {
+            font-size: 0.4rem;
+            color: #0a0a0a;
+            margin-left: 0.5rem;
+        }
+        .bar {
+            margin-right: .5rem;
+            display: flex;
+            align-items: center;
+            i {
+                font-size: .4rem;
+                margin-left: .61rem;
+                color: #757575;
+            }
+        }
+    }
+    .mui-content {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .nav {
+            width: 6.4rem;
+            margin: -.2rem auto 0;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.07);
+            .iconfont {
+                color: #5CC166;
+                font-size: .54rem;
+            }
+            .mui-table-view-cell {
+                padding: .32rem .3rem;
+                border-right: 1px solid #f7f7f7;
+                border-bottom: 1px solid #f7f7f7;
+                &.mui-active {
+                    background-color: #f7f7f7;
+                }
+                a {
+                    padding: .2rem 0;
+                }
+            }
+            .mui-media-body {
+                font-size: .28rem;
+                color: #999999;
+                height: 0.4rem;
+                line-height: 0.4rem;
+                margin-top: 0.25rem;
+            }
+            &:after {
+                display: none;
+            }
+        }
+    }
+}

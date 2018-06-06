@@ -1,0 +1,85 @@
+html,
+body {
+    height: 100%;
+}
+
+.app-container {
+    height: 100%;
+    .mui-content {
+        background-color: none;
+    }
+}
+
+.mui-bar {
+    height: .9rem;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    line-height: .9rem;
+    background: -webkit-linear-gradient(left, #B1E34D, #5CC166);
+    background: linear-gradient(to right, #B1E34D, #5CC166);
+    background-color: #3fd49a;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .12);
+    .mui-title {
+        margin: 0 auto;
+        text-align: center;
+        width: 3rem;
+        height: .9rem;
+        line-height: .9rem;
+        font-size: .38rem;
+        color: #fff;
+        vertical-align: middle;
+    }
+    .mui-icon {
+        color: #fff !important;
+        line-height: .9rem;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    span.iconfont {
+        height: .9rem; // width: .7rem;
+        text-align: center;
+        line-height: .9rem;
+        color: #fff;
+        font-size: .52rem;
+        display: block;
+        &:active {
+            color: #fbfbfb;
+        }
+    }
+    .mui-btn-link {
+        color: #ffffff;
+    }
+    &~.mui-content {
+        height: 100%;
+        overflow: auto;
+        padding-top: .9rem;
+    }
+}
+
+.loading,
+.noData {
+    text-align: center;
+    font-size: .24rem;
+    padding: 1rem;
+    color: #aaa;
+}
+
+.mui-pull-bottom-tips {
+    text-align: center;
+    font-size: .28rem;
+    color: #999;
+    margin: .2rem 0;
+}
+
+.mui-dtpicker {
+    .mui-dtpicker-header {
+        .mui-btn-blue {
+            border: 1px solid #5CC166;
+            background-color: #5CC166;
+        }
+    }
+    .mui-pciker-list li.highlight {
+        color: #5CC166;
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "dependencies": {
+        "js-md5": "^0.7.3",
+        "linkstate": "^1.1.1",
+        "mui": "^0.0.1",
+        "preact": "^8.2.9"
+    },
+    "devDependencies": {
+        "chalk": "^2.4.1",
+        "cross-env": "^5.1.6",
+        "glob": "^7.1.2",
+        "node-sass": "^4.9.0",
+        "parcel-bundler": "^1.8.1",
+        "postcss": "^6.0.22",
+        "postcss-svgo": "^2.1.6",
+        "shelljs": "^0.8.2",
+        "typescript": "^2.8.3"
+    },
+    "name": "h5-app",
+    "version": "0.0.1",
+    "description": "h5+ parcel preact typescript",
+    "main": "script/main",
+    "scripts": {
+        "test": "node parcel.config.js",
+        "start": "cross-env NODE_ENV=production node parcel.config.js",
+        "create": "node scripts/create.js"
+    },
+    "author": "lixiaolin <lixiaolin_23@foxmail.com>",
+    "license": "ISC"
+}
