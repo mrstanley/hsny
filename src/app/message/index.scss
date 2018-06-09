@@ -1,0 +1,40 @@
+.message {
+    .mui-content {
+        background-color: #ffffff;
+        .item {
+            padding: 0.4rem;
+            position: relative;
+            .title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                line-height: .5rem;
+                height: .5rem;
+                h3 {
+                    font-size: .36rem;
+                    color: #333333;
+                }
+                .time {
+                    font-size: .26rem;
+                    color: #999999;
+                }
+            }
+            .desc {
+                margin-top: 0.3rem;
+                line-height: 0.4rem;
+            }
+            &::after {
+                content: " ";
+                height: 0.02rem;
+                background-color: #f7f7f7;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+        .mui-pull {
+            font-weight: normal;
+        }
+    }
+}
