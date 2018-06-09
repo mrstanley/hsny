@@ -23,11 +23,14 @@ export default class App extends Component<AppProps, AppState> {
     }
     render(props: AppProps, state: AppState) {
         return (
-            <div className="app-container">
-                <header id="header" class="mui-bar mui-bar-nav">
+            <div className="app-container user">
+                <header id="header" class="mui-bar mui-bar-nav mui-bar-transparent">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
                     <h1 class="mui-title">导航栏</h1>
                 </header>
+                <div className="mui-content">
+                    <div className="hei" style={{ height: 1500 }}>123123</div>
+                </div>
             </div>
         );
     }
