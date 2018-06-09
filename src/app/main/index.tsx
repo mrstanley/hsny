@@ -15,8 +15,13 @@ export default class App extends Component<AppProps, AppState> {
         super(props);
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
-            Utils.hideScroll();
             this.login();
+            Utils.hideScroll();
+            mui.later(() => {
+                plus.navigator.setStatusBarStyle("dark");
+                plus.navigator.setFullscreen(false);
+                plus.navigator.closeSplashscreen();
+            }, 3000);            
         });
     }
     login() {
@@ -27,11 +32,6 @@ export default class App extends Component<AppProps, AppState> {
         }
     }
     componentDidMount() {
-        mui.later(() => {
-            plus.navigator.setStatusBarStyle("dark");
-            plus.navigator.setFullscreen(false);
-            plus.navigator.closeSplashscreen();
-        }, 3000);
         Utils.setImmersed();
         this.listener("login", () => {
             console.log("登录了");
@@ -43,8 +43,8 @@ export default class App extends Component<AppProps, AppState> {
                 <header className="app-header">
                     <div className="title">数据与管理</div>
                     <div className="bar">
-                        <i className="iconfont icon-mine"></i>
-                        <i className="iconfont icon-meg"></i>
+                        <i className="iconfont icon-mine" {...{ onTap: () => Utils.openPage("user", { from: { barStyle: "dark" } }) }}></i>
+                        <i className="iconfont icon-meg" {...{ onTap: () => Utils.openPage("message", { from: { barStyle: "dark" } }) }}></i>
                     </div>
                 </header>
                 <div className="mui-content">
