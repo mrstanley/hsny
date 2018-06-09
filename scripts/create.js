@@ -18,7 +18,7 @@ if (args && args.length) {
         console.log(chalk.green("创建模块代码 " + item + ".tsx"));
         console.log(chalk.green("创建模块样式 " + item + ".scss \n"));
         mkdir('-p', out);
-        cp("-r", "src/template/*", "src/app/" + item);
+        cp("-r", "src/template/module_tmp/*", "src/app/" + item);
     });
     console.log(chalk.yellow("创建模块完成 \n"));
 } else {
