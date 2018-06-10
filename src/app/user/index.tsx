@@ -15,6 +15,7 @@ export default class App extends Component<AppProps, AppState> {
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             plus.navigator.setStatusBarStyle("light");
+            Utils.hideScroll();
         });
     }
     componentDidMount() {
@@ -26,10 +27,19 @@ export default class App extends Component<AppProps, AppState> {
             <div className="app-container user">
                 <header id="header" class="mui-bar mui-bar-nav mui-bar-transparent">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
-                    <h1 class="mui-title">导航栏</h1>
+                    <h1 class="mui-title">个人中心</h1>
                 </header>
                 <div className="mui-content">
-                    <div className="hei" style={{ height: 1500 }}>123123</div>
+                    <div className="overview">
+                        <div className="total">
+                            <h1>0</h1>
+                            <span>今日上传</span>
+                        </div>
+                        <div className="total">
+                            <h1>10</h1>
+                            <span>昨日上传</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

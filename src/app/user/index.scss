@@ -1,8 +1,50 @@
 .user {
+    height: 100vh;
     .mui-bar.mui-bar-nav.mui-bar-transparent {
         background: none;
         background-color: rgba(92, 193, 102, 0);
         box-shadow: none;
-        position: fixed;
+    }
+    .mui-content {
+        height: 100%;
+        background-image: url("../../assets/images/user_bg@3x.png");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: 100% auto;
+        .overview {
+            height: 3.1rem;
+            width: 100%;
+            display: flex;
+            position: relative;
+            padding-top: .55rem;
+            .total {
+                flex: 1;
+                text-align: center;
+                color: #ffffff;
+                h1 {
+                    font-size: .6rem;
+                    margin: 0;
+                    height: 0.84rem;
+                    line-height: 0.84rem;
+                }
+                span {
+                    line-height: 0.4rem;
+                    display: block;
+                    height: 0.4rem;
+                    margin-top: 0.2rem;
+                    font-size: .28rem;
+                }
+            }
+            &::after {
+                content: " ";
+                position: absolute;
+                width: .02rem;
+                height: .78rem;
+                left: 50%;
+                margin-left: -0.01rem;
+                background-color: rgba(255, 255, 255, 0.3);
+                bottom: 1.46rem;
+            }
+        }
     }
 }
