@@ -45,6 +45,21 @@ export default class App extends Component<AppProps, AppState> {
     getPresent(num) {
         return (num / this.state.max) * 100 + "%";
     }
+    handleLogout() {
+        mui.toast("退出成功");
+    }
+    handleSetting() {
+        plus.nativeUI.actionSheet({
+            title: "确认退出",
+            cancel: "取消",
+            buttons: [{
+                title: "确定",
+                color: "#6BC762"
+            }]
+        }, (e) => {
+            e.index > 0 && this.handleLogout();
+        });
+    }
     render(props: AppProps, state: AppState) {
         let list = [];
         for (var i = 0; i <= this.state.max; i++) {
@@ -57,6 +72,7 @@ export default class App extends Component<AppProps, AppState> {
                 <header id="header" class="mui-bar mui-bar-nav mui-bar-transparent">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
                     <h1 class="mui-title">个人中心</h1>
+                    <span class="iconfont icon-set mui-pull-right" {...{ onTap: this.handleSetting.bind(this) }}></span>
                 </header>
                 <div className="mui-content" id="pullrefresh">
                     <div className="overview">
