@@ -41,7 +41,6 @@ export function fetch(type, url, params) {
                 Authorization: Utils.getCookie("authorization") || ""
             },
             success: (res) => {
-                debugger;
                 let { data, errorCode, msg } = res;
                 if (errorCode == 0) {
                     resolve(data);

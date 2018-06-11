@@ -61,5 +61,17 @@
                 display: none;
             }
         }
+        .noMenu {
+            text-align: center;
+            font-size: .28rem;
+            color: #999999;
+            flex: 1;
+            .iconfont {
+                color: #5CC166;
+                font-size: .54rem;
+                display: block;
+                margin-bottom: 0.1rem;
+            }
+        }
     }
 }
