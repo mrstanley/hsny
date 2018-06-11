@@ -46,5 +46,61 @@
                 bottom: 1.46rem;
             }
         }
+        .dataChart {
+            padding: .54rem .4rem;
+            h3 {
+                font-size: .32rem;
+                height: 0.44rem;
+                line-height: 0.44rem;
+                font-weight: normal;
+                margin: 0;
+            }
+            .charts {
+                margin-top: 0.42rem;
+                .item {
+                    display: flex;
+                    align-items: center;
+                    height: .4rem;
+                    line-height: .4rem;
+                    justify-content: space-between;
+                    margin-bottom: .2rem;
+                    .title {
+                        width: 1.68rem;
+                        font-size: .26rem;
+                        color: #999999;
+                        text-align: right;
+                    }
+                    .count {
+                        flex: 1;
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        padding-left: .3rem;
+                        .len {
+                            height: .16rem;
+                            border-radius: .08rem;
+                            line-height: .16rem;
+                            background: -webkit-linear-gradient(left, #B1E34D, #5CC166);
+                            background: linear-gradient(to right, #B1E34D, #5CC166);
+                        }
+                        span {
+                            font-size: .24rem;
+                            color: #5CC166;
+                            margin-left: .24rem;
+                        }
+                    }
+                    .count-x {
+                        flex: 1;
+                        color: #999999;
+                        font-size: .28rem;
+                        height: .4rem;
+                        line-height: .4rem;
+                        display: flex;
+                        justify-content: space-between;
+                        padding-left: .3rem;
+                    }
+                }
+            }
+        }
     }
 }
