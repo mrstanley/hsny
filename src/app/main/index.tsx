@@ -21,7 +21,7 @@ export default class App extends Component<AppProps, AppState> {
                 plus.navigator.setStatusBarStyle("dark");
                 plus.navigator.setFullscreen(false);
                 plus.navigator.closeSplashscreen();
-            }, 3000);            
+            }, 3000);
         });
     }
     login() {
@@ -81,7 +81,7 @@ export default class App extends Component<AppProps, AppState> {
                             <span class="iconfont icon-ZL"></span>
                             <div class="mui-media-body">栽培历数据</div></a>
                         </li>
-                        <li class="mui-table-view-cell mui-media mui-col-xs-6"><a href="javascript:;">
+                        <li class="mui-table-view-cell mui-media mui-col-xs-6" {...{ onTap: () => { Utils.openPage("devices", { from: { barStyle: "dark" } }) } }} ><a href="javascript:;">
                             <span class="iconfont icon-NS"></span>
                             <div class="mui-media-body">农机设备管理</div></a>
                         </li>

@@ -1,0 +1,38 @@
+#tab-scroll {
+    height: 100%;
+    .mui-segmented-control {
+        height: 1.1rem;
+        background: -webkit-linear-gradient(left, #B1E34D, #5CC166);
+        background: linear-gradient(to right, #B1E34D, #5CC166);
+        a {
+            font-size: .32rem;
+            color: rgba(255, 255, 255, .6);
+            border: 0 none;
+            margin-bottom: 0;
+            position: relative;
+            padding: 0;
+            height: 1.1rem;
+            &.mui-active {
+                color: rgba(255, 255, 255, 1);
+                border-bottom: 0 none;
+                &::after {
+                    content: " ";
+                    width: 0.8rem;
+                    height: 0.05rem;
+                    background-color: #ffffff;
+                    border-radius: .03rem;
+                    position: absolute;
+                    bottom: 0.29rem;
+                    left: 50%;
+                    margin-left: -0.4rem;
+                }
+            }
+        }
+    }
+    .tab-wrap {
+        height: calc(100% - 1.1rem);
+        .mui-control-content {
+            height: 100%;
+        }
+    }
+}
