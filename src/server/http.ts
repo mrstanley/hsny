@@ -29,7 +29,7 @@ export function notice(code, content) {
 }
 
 
-export function fetch(type, url, params) {
+export function fetch(type, url, params?) {
     type = type.toLocaleLowerCase();
     return new Promise((resolve, reject) => {
         mui.ajax(url, {

@@ -75,11 +75,11 @@ export default class App extends Component<AppProps, AppState> {
                     <form>
                         <div className="item">
                             <i className="iconfont icon-Accountnumber"></i>
-                            <input value={userAccount} onInput={linkState(this, 'userAccount')} type="email" placeholder="请输入账号" />
+                            <input value={userAccount} onInput={linkState(this, 'userAccount')} type="text" placeholder="请输入账号" />
                         </div>
                         <div className="item">
                             <i className="iconfont icon-Password"></i>
-                            <input value={password} onKeyUp={this.handleEnter.bind(this)} onInput={linkState(this, 'password')} type={showPws ? "email" : "password"} placeholder="请输入密码" />
+                            <input value={password} onKeyUp={this.handleEnter.bind(this)} onInput={linkState(this, 'password')} type={showPws ? "text" : "password"} placeholder="请输入密码" />
                             <i className={showPws ? "eye iconfont icon-eye1" : "eye iconfont icon-eye"} {...{ onTap: () => this.setState({ showPws: !this.state.showPws }) }}></i>
                         </div>
                     </form>

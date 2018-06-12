@@ -20,6 +20,9 @@ let getTableData = {
         let page = params.page;
         delete params.page;
         return fetch('post', `${REMOTE}/virtualTable/list/${page}/10`, params);
+    },
+    getVirtualTableDetailById: params => {
+        return fetch('get', `${REMOTE}/virtualTable/detailById?id=${params.id}`);
     }
 }
 
