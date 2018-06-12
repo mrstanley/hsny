@@ -19,6 +19,7 @@ interface AppState {
 }
 
 export default class App extends Component<AppProps, AppState> {
+    public userInfo
     constructor(props: AppProps) {
         super(props);
         this.state = {
@@ -31,10 +32,10 @@ export default class App extends Component<AppProps, AppState> {
                 name: "全部分类",
             }, {
                 name: "已完成",
-                value: 1002
+                state: 1002
             }, {
                 name: "未完成",
-                value: 1001
+                state: 1001
             }]
         };
     }
@@ -43,11 +44,11 @@ export default class App extends Component<AppProps, AppState> {
             let { collectAreaId } = this.props;
             this.setState({ dict: Utils.getSettings("dict") });
             if (collectAreaId) {
-                let userInfo = Utils.getSettings("userInfo");
+                this.userInfo = Utils.getSettings("userInfo");
                 this.getTableData({
                     page: 1,
                     collectAreaId: collectAreaId,
-                    operatorId: userInfo.userId
+                    operatorId: this.userInfo.userId
                 });
             }
         })
@@ -66,13 +67,12 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleChangeState(i) {
         if (this.state.active !== i) {
-            this.setState({ active: i });
-            let { value: state } = this.state.filters[i];
-            let userInfo = Utils.getSettings("userInfo");
+            this.setState({ active: i, loading: true, list: [] });
+            let { state } = this.state.filters[i];
             this.getTableData({
                 page: 1,
                 collectAreaId: this.props.collectAreaId,
-                operatorId: userInfo.userId,
+                operatorId: this.userInfo.userId,
                 state
             });
         }

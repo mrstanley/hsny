@@ -65,9 +65,7 @@ export default class App extends Component<AppProps, AppState> {
         });
     }
     login() {
-        let authorization = Utils.getCookie("authorization");
-        if (!authorization) {
-            mui.toast("请登录");
+        if (!Utils.getCookie("authorization")) {
             Utils.openPage("login", { from: { barStyle: "dark", name: "main" } });
         } else {
             this.getCollectAreaList();
@@ -83,6 +81,13 @@ export default class App extends Component<AppProps, AppState> {
         let { name } = this.state.icons[item.id];
         name && Utils.openPage(name, { from: { barStyle: "dark" }, params: { collectAreaId: item.id } });
     }
+    handleIsLogin(page) {
+        if (Utils.getCookie("authorization")) {
+            Utils.openPage(page, { from: { barStyle: "dark" } });
+        } else {
+            Utils.openPage("login", { from: { barStyle: "dark" } });
+        }
+    }
     render(props: AppProps, state: AppState) {
         let { menus, icons } = state;
         return (
@@ -90,8 +95,8 @@ export default class App extends Component<AppProps, AppState> {
                 <header className="app-header">
                     <div className="title">数据与管理</div>
                     <div className="bar">
-                        <i className="iconfont icon-mine" {...{ onTap: () => Utils.openPage("user", { from: { barStyle: "dark" } }) }}></i>
-                        <i className="iconfont icon-meg" {...{ onTap: () => Utils.openPage("message", { from: { barStyle: "dark" } }) }}></i>
+                        <i className="iconfont icon-mine" {...{ onTap: this.handleIsLogin.bind(this, "user") }}></i>
+                        <i className="iconfont icon-meg" {...{ onTap: this.handleIsLogin.bind(this, "message") }}></i>
                     </div>
                 </header>
                 <div className="mui-content">
@@ -112,8 +117,7 @@ export default class App extends Component<AppProps, AppState> {
                         </ul>
                     ) : (
                             <div className="noMenu">
-                                <span class="iconfont icon-more"></span>
-                                敬请期待
+                                {Utils.getCookie("authorization") ? "敬请期待" : <span className="notice" {...{ onTap: this.handleIsLogin.bind(this, "") }}>请登录</span>}
                             </div>
                         )}
                 </div>
