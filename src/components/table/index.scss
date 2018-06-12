@@ -1,0 +1,89 @@
+.app-table {
+    height: 100%;
+    background-color: #ffffff;
+    &-filter {
+        height: 1.04rem;
+        display: flex;
+        align-items: center;
+        position: relative;
+        background-color: #fafafa;
+        span {
+            height: 0.44rem;
+            line-height: 0.44rem;
+            padding: 0 .24rem;
+            background-color: #e7e7e7;
+            color: #ffffff;
+            font-size: .26rem;
+            margin-left: .4rem;
+            border-radius: .22rem;
+            &.mui-active {
+                background-color: #89D490;
+            }
+        }
+    }
+    &-header {
+        height: 0.8rem;
+        line-height: 0.8rem;
+        position: relative;
+        font-size: .28rem;
+        color: #333333;
+    }
+    &-wrap {
+        height: calc(100% - 1.84rem);
+        position: relative;
+    }
+    &-border {
+        &::after {
+            position: absolute;
+            content: " ";
+            bottom: 0;
+            height: 0.02rem;
+            background-color: #E7E7E7;
+            left: 0;
+            right: 0;
+        }
+    }
+    &-row {
+        display: flex;
+        padding: 0 .4rem;
+        .order {
+            flex: 1;
+        }
+        .tableName {
+            flex: 2.5;
+        }
+        .status {
+            flex: 1.5;
+        }
+        .option {
+            flex: 2;
+        }
+    }
+    &-item {
+        position: relative;
+        line-height: 1.06rem;
+        color: #666666;
+        font-size: .28rem;
+        .option {
+            span {
+                color: #5FDBA0;
+                margin-right: 0.5rem;
+            }
+        }
+        &::after {
+            position: absolute;
+            content: " ";
+            bottom: 0;
+            height: 0;
+            border-bottom: dashed .02rem #E7E7E7;
+            left: .2rem;
+            right: .2rem;
+        }
+    }
+    &-noData {
+        text-align: center;
+        font-size: .28rem;
+        color: #999999;
+        margin-top: 1rem;
+    }
+}

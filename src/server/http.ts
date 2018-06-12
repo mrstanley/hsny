@@ -4,6 +4,7 @@ export function notice(code, content) {
     switch (code) {
         case 401:
             mui.toast("登录已过期，请重新登陆", { duration: 3 });
+            Utils.openPage("login", { from: { barStyle: "dark" } });
             break;
         case 403:
             mui.toast(content || "无访问权限", { duration: 3 });
@@ -50,7 +51,6 @@ export function fetch(type, url, params) {
                 }
             },
             error: (error, type, errorThrown) => {
-                debugger;
                 if (error.response) {
                     let errorStatusCode = error.response.status;
                     let statusText = error.response.statusText;

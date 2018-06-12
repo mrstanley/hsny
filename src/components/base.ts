@@ -1,4 +1,4 @@
-declare const plus, mui, require;
+declare const plus, mui;
 
 export default {
     /**

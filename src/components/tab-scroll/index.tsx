@@ -3,7 +3,9 @@ declare const mui;
 import "./index.scss";
 import { h, Component } from "preact";
 
-interface AppProps { }
+interface AppProps {
+    children?
+}
 interface AppState { }
 
 export default class App extends Component<AppProps, AppState> {
@@ -24,11 +26,11 @@ export default class App extends Component<AppProps, AppState> {
                 </div>
                 <div class="tab-wrap">
                     <div id="item1" class="mui-control-content mui-active">
-                        <div id="scroll" class="mui-scroll-wrapper">
-                            <div class="mui-scroll"></div>
-                        </div>
+                        {props.children[0]}
                     </div>
-                    <div id="item2" class="mui-control-content"></div>
+                    <div id="item2" class="mui-control-content">
+                        {props.children[1]}
+                    </div>
                 </div>
             </div>
         );

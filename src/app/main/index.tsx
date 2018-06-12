@@ -44,6 +44,7 @@ export default class App extends Component<AppProps, AppState> {
         };
         this.init(() => {
             this.login();
+            this.getDict();
             Utils.hideScroll();
             mui.later(() => {
                 plus.navigator.setStatusBarStyle("dark");
@@ -56,6 +57,11 @@ export default class App extends Component<AppProps, AppState> {
         Service.getCollectAreaList({}).then((data: any) => {
             let { pageData } = data;
             this.setState({ menus: pageData });
+        });
+    }
+    getDict() {
+        Service.dict({}).then((data: any) => {
+            Utils.setSettings("dict", data);
         });
     }
     login() {
@@ -73,8 +79,9 @@ export default class App extends Component<AppProps, AppState> {
             this.getCollectAreaList();
         });
     }
-    handleOpenPage(name: string) {
-        name && Utils.openPage(name, { from: { barStyle: "dark" } });
+    handleOpenPage(item: any) {
+        let { name } = this.state.icons[item.id];
+        name && Utils.openPage(name, { from: { barStyle: "dark" }, params: { collectAreaId: item.id } });
     }
     render(props: AppProps, state: AppState) {
         let { menus, icons } = state;
@@ -92,7 +99,7 @@ export default class App extends Component<AppProps, AppState> {
                         <ul class="nav mui-table-view mui-grid-view mui-grid-9">
                             {menus.map((item: any) => (
                                 <li class="mui-table-view-cell mui-media mui-col-xs-6">
-                                    <a {...{ onTap: this.handleOpenPage.bind(this, icons[item.id].name) }} href="javascript:;">
+                                    <a {...{ onTap: this.handleOpenPage.bind(this, item) }} href="javascript:;">
                                         <span className={"iconfont " + icons[item.id].icon}></span>
                                         <div class="mui-media-body">{item.name}</div>
                                     </a>

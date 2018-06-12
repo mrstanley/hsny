@@ -3,18 +3,24 @@ declare const plus, mui, require;
 import { h, render, Component } from "preact";
 import Mixins from "../../components/base";
 import TabScroll from "../../components/tab-scroll";
+import Table from "../../components/table";
 import Utils from "../../utils";
 
 interface AppProps { }
-interface AppState { }
+interface AppState {
+    collectAreaId: string;
+}
 
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
+    public view
     constructor(props: AppProps) {
         super(props);
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
+            let { collectAreaId } = this.view.params;
+            this.setState({ collectAreaId });
             plus.navigator.setStatusBarStyle("light");
             Utils.hideScroll();
         });
@@ -24,6 +30,7 @@ export default class App extends Component<AppProps, AppState> {
         Utils.handleBack();
     }
     render(props: AppProps, state: AppState) {
+        let { collectAreaId } = state;
         return (
             <div className="app-container congbingqing">
                 <header id="header" class="mui-bar mui-bar-nav">
@@ -31,7 +38,9 @@ export default class App extends Component<AppProps, AppState> {
                     <h1 class="mui-title">虫病情数据</h1>
                 </header>
                 <div class="mui-content">
-                    <TabScroll></TabScroll>
+                    <TabScroll>
+                        <Table collectAreaId={collectAreaId}></Table>
+                    </TabScroll>
                 </div>
             </div>
         );
