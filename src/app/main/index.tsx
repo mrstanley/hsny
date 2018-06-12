@@ -22,7 +22,7 @@ export default class App extends Component<AppProps, AppState> {
             menus: [],
             icons: [{}, {
                 icon: "icon-CB",
-                name: "congBingQing"
+                name: "disease"
             }, {
                 icon: "icon-ZB"
             }, {

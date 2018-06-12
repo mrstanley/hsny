@@ -47,8 +47,8 @@ export default class App extends Component<AppProps, AppState> {
                 this.userInfo = Utils.getSettings("userInfo");
                 this.getTableData({
                     page: 1,
-                    collectAreaId: collectAreaId,
-                    operatorId: this.userInfo.userId
+                    // operatorId: this.userInfo.userId,
+                    collectAreaId: collectAreaId
                 });
             }
         })
@@ -72,7 +72,7 @@ export default class App extends Component<AppProps, AppState> {
             this.getTableData({
                 page: 1,
                 collectAreaId: this.props.collectAreaId,
-                operatorId: this.userInfo.userId,
+                // operatorId: this.userInfo.userId,
                 state
             });
         }
