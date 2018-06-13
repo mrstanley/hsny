@@ -51,6 +51,14 @@ export default class App extends Component<AppProps, AppState> {
                     collectAreaId: collectAreaId
                 });
             }
+            window.addEventListener("reloadData", (ev: Event) => {
+                this.setState({ list: [], loading: true });
+                this.getTableData({
+                    page: 1,
+                    operatorId: this.userInfo.userId,
+                    collectAreaId: collectAreaId
+                });
+            })
         })
     }
     getTableData(params: any) {
@@ -77,6 +85,11 @@ export default class App extends Component<AppProps, AppState> {
             });
         }
     }
+    handleUpload(data) {
+        if (data.state == 1003) {
+            mui.toast("上传成功");
+        }
+    }
     render(props: AppProps, state: AppState) {
         let { list, loading } = state;
         return (
@@ -99,11 +112,18 @@ export default class App extends Component<AppProps, AppState> {
                                 {list.length > 0 ? list.map((item, index) => (
                                     <div className="app-table-item app-table-row">
                                         <div className="order">{index + 1}</div>
-                                        <div className="tableName">{item.collectAreaName}</div>
+                                        <div className="tableName">{item.anotherName}</div>
                                         <div className="status">{this.getState(item.state)}</div>
                                         <div className="option">
-                                            {item.state == 1001 && <span alt="" {...{ onTap: () => Utils.openPage("addData", { table: item }) }} >添加</span>}
-                                            {item.state == 1002 && (<div><span alt="" {...{ onTap: () => Utils.openPage("tableList", { table: item }) }} >预览</span><span>上传</span></div>)}
+                                            {item.state == 1001 && (
+                                                <span alt="" {...{ onTap: () => Utils.openPage("addData", { table: item }) }} >添加</span>
+                                            )}
+                                            {(item.state == 1002 || item.state == 1003) && (
+                                                <div>
+                                                    <span alt="" {...{ onTap: () => Utils.openPage("tableList", { table: item }) }} >预览</span>
+                                                    <span className={item.state == 1002 ? "gray" : ""} {...{ onTap: this.handleUpload.bind(this, item) }}>上传</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 )) : (

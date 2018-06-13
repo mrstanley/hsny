@@ -18,6 +18,8 @@ export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     public init;
     public view;
+    public picker;
+    public datePicker;
     constructor(props: AppProps) {
         super(props);
         this.state = {
@@ -32,7 +34,6 @@ export default class App extends Component<AppProps, AppState> {
         this.init(() => {
             this.setState({ title: this.view.table.collectAreaName });
             this.getTableDetail();
-            console.log(JSON.stringify(this.view.table));
         });
     }
     getTableDetail() {
@@ -61,6 +62,8 @@ export default class App extends Component<AppProps, AppState> {
     }
     componentDidMount() {
         Utils.setImmersed();
+        this.picker = new mui.PopPicker();
+        this.datePicker = new mui.DtPicker();
     }
     // 封装数据更新工具函数
     updateFieldsData(index, data) {
@@ -72,11 +75,26 @@ export default class App extends Component<AppProps, AppState> {
         let value = ev.target.value;
         this.updateFieldsData(index, { value });
     }
+    handSelect(ev, index) {
+        let items = this.state.fields[index].param.map(item => {
+            return { value: item, text: item }
+        })
+        this.picker.setData(items);
+        this.picker.show((selectItems) => {
+            this.updateFieldsData(index, { value: selectItems[0].value });
+        });
+    }
+    handDate(ev, index) {
+        this.datePicker.show((selectItems) => {
+            let { value } = selectItems;
+            this.updateFieldsData(index, { value });
+        });
+    }
     validate() {
         for (let i = 0; i < this.state.fields.length; i++) {
             const item = this.state.fields[i];
             if (item.required && !item.value) {
-                mui.toast(`${item.name}字段必填`)
+                mui.toast(`${item.name}为必填项`)
                 return false;
             }
         }
@@ -91,20 +109,30 @@ export default class App extends Component<AppProps, AppState> {
         });
         return JSON.stringify(data);
     }
+    changeState(params) {
+        Service.updateStateOrUseState(params).then(data => {
+            mui.fire(this.view.opener(), "reloadData");
+        });
+    }
     handComplete() {
-        let isValidate = this.validate();
-        if (isValidate) {
-            let value = this.formartData();
-            let { id } = this.view.table;
-            Service.serviceDataAdd({
-                value,
-                virtualTableId: id
-            }).then(data => {
-
-            }).catch(error => {
-
-            });
-        }
+        plus.nativeUI.confirm('确认添加？', ({ index }) => {
+            if (index == 0) {
+                let isValidate = this.validate();
+                if (isValidate) {
+                    let value = this.formartData();
+                    let { id } = this.view.table;
+                    Service.serviceDataAdd({
+                        value,
+                        virtualTableId: id
+                    }).then(data => {
+                        this.changeState({
+                            state: 1003,
+                            tableId: id
+                        });
+                    })
+                }
+            }
+        });
     }
     render(props: AppProps, state: AppState) {
         let { title, fields, loading } = state;
@@ -120,22 +148,24 @@ export default class App extends Component<AppProps, AppState> {
                             <div className="fields-item">
                                 <div className="fields-label">{item.name}</div>
                                 <div className="fields-input">
-                                    {item.type == "select" ? (
-                                        <select value={item.value} onChange={(ev) => this.handleInput(ev, index)}>
-                                            {item.param.map(opt => (
-                                                <option value={opt}>{opt}</option>
-                                            ))}
-                                        </select>
-                                    ) : (
-                                            <input type={item.type} value={item.value} onInput={(ev) => this.handleInput(ev, index)} placeholder={`请输入${item.name}`} />
-                                        )}
+                                    {item.type == "select" && (
+                                        <input type="text" readOnly value={item.value} {...{ onTap: (ev) => this.handSelect(ev, index) }} placeholder={`请点击列表选择`} />
+                                    )}
+                                    {(item.type == "date") && (
+                                        <input type="text" readOnly value={item.value} {...{ onTap: (ev) => this.handDate(ev, index) }} placeholder={`请选择日期值`} />
+                                    )}
+                                    {(item.type == "text" || item.type == "number") && (
+                                        <input type={item.type} value={item.value} onInput={(ev) => this.handleInput(ev, index)} placeholder={`请输入字段的值`} />
+                                    )}
                                 </div>
                             </div>
-                        )) : <div className="app-table-noData">{loading ? "初始化中..." : "暂无字段信息"}</div>}
-                        <div className="fields-btns">
-                            <div className="btn">继续添加</div>
-                            <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成添加</div>
-                        </div>
+                        )) : <div className="fields-noData">{loading ? "初始化中..." : "暂无字段信息"}</div>}
+                        {fields.length > 0 && (
+                            <div className="fields-btns">
+                                <div className="btn">继续添加</div>
+                                <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成添加</div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

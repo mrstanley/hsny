@@ -30,6 +30,9 @@ let serviceData = {
 };
 // 虚拟表数据
 let getTableData = {
+    updateStateOrUseState: params => {
+        return fetch('get', `${REMOTE}/virtualTable/updateStateOrUseState?state=${params.state}&tableId=${params.tableId}`);
+    },
     getVirtualTableList: params => {
         let page = params.page;
         delete params.page;

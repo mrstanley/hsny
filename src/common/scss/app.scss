@@ -42,6 +42,9 @@
     }
     .mui-btn-link {
         color: #ffffff;
+        &:active {
+            color: #ffffff;
+        }
     }
     &~.mui-content {
         height: 100%;

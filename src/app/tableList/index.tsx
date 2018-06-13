@@ -21,10 +21,10 @@ export default class App extends Component<AppProps, AppState> {
     render(props: AppProps, state: AppState) {
         return (
             <div className="app-container">
-                <header id="header" class="mui-bar mui-bar-nav mui-bar-transparent">
+                <header id="header" class="mui-bar mui-bar-nav">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
                     <h1 class="mui-title">表数据预览</h1>
-                    <span class="mui-pull-right">新增记录</span>
+                    <span class="mui-btn mui-btn-link mui-pull-right">新增记录</span>
                 </header>
             </div>
         );

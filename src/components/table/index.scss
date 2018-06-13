@@ -68,6 +68,9 @@
             span {
                 color: #5FDBA0;
                 margin-right: 0.5rem;
+                &.gray {
+                    color: #cccccc;
+                }
             }
         }
         &::after {

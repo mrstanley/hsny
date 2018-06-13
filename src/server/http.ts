@@ -22,6 +22,9 @@ export function notice(code, content) {
         case 504:
             mui.toast(content || "访问服务器超时", { duration: 3 });
             break;
+        case 9998:
+            mui.toast(content || "需要修改的完成状态不能与原状态一致", { duration: 3 });
+            break;
         default:
             mui.toast(content || "未知错误", { duration: 3 });
             break;
@@ -47,7 +50,7 @@ export function fetch(type, url, params?) {
                     resolve(data);
                 } else {
                     if (errorCode) {
-                        notice(errorCode, msg);
+                        notice(errorCode, msg || JSON.stringify(data));
                         reject();
                     } else {
                         resolve(res);
