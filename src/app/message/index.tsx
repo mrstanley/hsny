@@ -3,10 +3,12 @@ declare const plus, mui, require;
 import { h, render, Component } from "preact";
 import Mixins from "../../components/base";
 import Utils from "../../utils";
+import Service from "../../server";
 
 interface AppProps { }
 interface AppState {
     count: number;
+    page: number;
     list: object[]
 }
 
@@ -15,7 +17,7 @@ export default class App extends Component<AppProps, AppState> {
     init: Function;
     constructor(props: AppProps) {
         super(props);
-        this.state = { count: 0, list: new Array(20).fill(1) };
+        this.state = { count: 0, list: [], page: 0 };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             plus.navigator.setStatusBarStyle("light");
@@ -42,15 +44,29 @@ export default class App extends Component<AppProps, AppState> {
             }
         });
     }
+    getMessages({ page }) {
+        Service.getMessage({
+            query: `{msgs(page:${page},size:10){totalCount,pageData{queryAll}}}`
+        }).then((data: any) => {
+            if (data.msgs.length) {
+                let list = data.msgs[0].pageData;
+                this.setState({ list: this.state.list.concat(list), page });
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh((list.length < 10));
+            } else {
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+        });
+    }
     pulldownRefresh() {
         setTimeout(() => {
             mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
         }, 1000);
     }
     pullupRefresh() {
-        this.setState({ count: this.state.count + 1 });
         setTimeout(() => {
-            mui('#pullrefresh').pullRefresh().endPullupToRefresh((this.state.count > 2));
+            this.getMessages({
+                page: this.state.page + 1
+            });
         }, 1000);
     }
     render(props: AppProps, state: AppState) {
@@ -62,15 +78,13 @@ export default class App extends Component<AppProps, AppState> {
                 </header>
                 <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
                     <div class="mui-scroll">
-                        {state.list.map(item => (
+                        {state.list.map((item: any) => (
                             <div className="item">
                                 <div className="title">
-                                    <h3>管理员</h3>
-                                    <span className="time">2018-01-12</span>
+                                    <h3>{item.title}</h3>
+                                    <span className="time">{item.createTime.split(".")[0]}</span>
                                 </div>
-                                <p className="desc">
-                                    启用数据表 (土壤检测表)，表类型 (虫病情数据)。
-                            </p>
+                                <p className="desc">{item.content}</p>
                             </div>
                         ))}
                     </div>

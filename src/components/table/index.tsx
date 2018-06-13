@@ -103,7 +103,7 @@ export default class App extends Component<AppProps, AppState> {
                                         <div className="status">{this.getState(item.state)}</div>
                                         <div className="option">
                                             {item.state == 1001 && <span alt="" {...{ onTap: () => Utils.openPage("addData", { table: item }) }} >添加</span>}
-                                            {item.state == 1002 && (<div><span>编辑</span><span>上传</span></div>)}
+                                            {item.state == 1002 && (<div><span alt="" {...{ onTap: () => Utils.openPage("tableList", { table: item }) }} >预览</span><span>上传</span></div>)}
                                         </div>
                                     </div>
                                 )) : (

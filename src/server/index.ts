@@ -3,18 +3,32 @@ import { fetch } from './http';
 
 let login = params => {
     return fetch('post', `${REMOTE}/user/appLogin`, params);
-}
+};
 
 let dict = params => {
     return fetch('post', `${REMOTE}/dict/all`, params);
-}
+};
 
 let main = {
     getCollectAreaList: params => {
         return fetch('post', `${REMOTE}/collectArea/list/1/10`, params);
     }
+};
+
+let message = {
+    // /v1/msg/graphqlQuery
+    getMessage: params => {
+        return fetch('post', `${REMOTE}/msg/graphqlQuery`, params);
+    }
 }
 
+// 业务数据
+let serviceData = {
+    serviceDataAdd: params => {
+        return fetch('post', `${REMOTE}/serviceData/add`, params);
+    }
+};
+// 虚拟表数据
 let getTableData = {
     getVirtualTableList: params => {
         let page = params.page;
@@ -24,11 +38,13 @@ let getTableData = {
     getVirtualTableDetailById: params => {
         return fetch('get', `${REMOTE}/virtualTable/detailById?id=${params.id}`);
     }
-}
+};
 
 export default {
     dict,
     login,
     ...main,
-    ...getTableData
+    ...message,
+    ...getTableData,
+    ...serviceData
 }

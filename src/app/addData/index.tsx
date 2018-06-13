@@ -47,6 +47,7 @@ export default class App extends Component<AppProps, AppState> {
         let fields = fieldsList.map(item => {
             let fieldsData: any = {
                 name: item.name,
+                required: !!item.isRequired,
                 type: this.state.inputType[item.type],
                 value: ""
             };
@@ -71,8 +72,42 @@ export default class App extends Component<AppProps, AppState> {
         let value = ev.target.value;
         this.updateFieldsData(index, { value });
     }
+    validate() {
+        for (let i = 0; i < this.state.fields.length; i++) {
+            const item = this.state.fields[i];
+            if (item.required && !item.value) {
+                mui.toast(`${item.name}字段必填`)
+                return false;
+            }
+        }
+        return true;
+    }
+    formartData() {
+        let data = {};
+        this.state.fields.forEach(item => {
+            if (item.value) {
+                data[item.name] = item.value;
+            }
+        });
+        return JSON.stringify(data);
+    }
+    handComplete() {
+        let isValidate = this.validate();
+        if (isValidate) {
+            let value = this.formartData();
+            let { id } = this.view.table;
+            Service.serviceDataAdd({
+                value,
+                virtualTableId: id
+            }).then(data => {
+
+            }).catch(error => {
+
+            });
+        }
+    }
     render(props: AppProps, state: AppState) {
-        let { title, data, fields, loading } = state;
+        let { title, fields, loading } = state;
         return (
             <div className="app-container addData">
                 <header id="header" class="mui-bar mui-bar-nav">
@@ -95,7 +130,7 @@ export default class App extends Component<AppProps, AppState> {
                         )) : <div className="app-table-noData">{loading ? "初始化中..." : "暂无字段信息"}</div>}
                         <div className="fields-btns">
                             <div className="btn">继续添加</div>
-                            <div className="btn block">完成添加</div>
+                            <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成添加</div>
                         </div>
                     </div>
                 </div>

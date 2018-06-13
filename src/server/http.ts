@@ -46,8 +46,12 @@ export function fetch(type, url, params?) {
                 if (errorCode == 0) {
                     resolve(data);
                 } else {
-                    notice(errorCode, msg);
-                    reject();
+                    if (errorCode) {
+                        notice(errorCode, msg);
+                        reject();
+                    } else {
+                        resolve(res);
+                    }
                 }
             },
             error: (error, type, errorThrown) => {
