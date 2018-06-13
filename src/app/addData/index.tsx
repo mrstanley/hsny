@@ -52,7 +52,7 @@ export default class App extends Component<AppProps, AppState> {
                 value: ""
             };
             if (item.param) {
-                fieldsData.param = item.param;
+                fieldsData.param = item.param.split(",");
                 fieldsData.type = "select";
             }
             return fieldsData;
@@ -121,7 +121,11 @@ export default class App extends Component<AppProps, AppState> {
                                 <div className="fields-label">{item.name}</div>
                                 <div className="fields-input">
                                     {item.type == "select" ? (
-                                        <select name="" id=""></select>
+                                        <select value={item.value} onChange={(ev) => this.handleInput(ev, index)}>
+                                            {item.param.map(opt => (
+                                                <option value={opt}>{opt}</option>
+                                            ))}
+                                        </select>
                                     ) : (
                                             <input type={item.type} value={item.value} onInput={(ev) => this.handleInput(ev, index)} placeholder={`请输入${item.name}`} />
                                         )}

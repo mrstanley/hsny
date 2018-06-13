@@ -24,6 +24,11 @@
             }
             &-input {
                 margin-top: .2rem;
+                select {
+                    padding: .05rem .2rem;
+                    margin: 0;
+                    box-shadow: 0 0 0 1px #eeeeee;
+                }
                 input {
                     color: #333333;
                     border: 0 none;
@@ -39,26 +44,27 @@
                 }
             }
             &-btns {
-                margin-top: 0.6rem;
+                margin: 0.6rem 0;
                 display: flex;
                 justify-content: center;
                 .btn {
                     height: .78rem;
                     border-radius: .4rem;
                     border: solid .02rem #5CC166;
-                    line-height: 0.78rem;
                     text-align: center;
                     color: #5CC166;
                     font-size: .3rem;
                     background-color: #fff;
                     padding: 0 .6rem;
                     margin: 0 .5rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     &.block {
                         background: -webkit-linear-gradient(left, #B1E34D, #5CC166);
                         background: linear-gradient(to right, #B1E34D, #5CC166);
                         color: #ffffff;
                         height: 0.8rem;
-                        line-height: 0.8rem;
                         border: 0 none;
                     }
                 }

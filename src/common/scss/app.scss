@@ -65,14 +65,19 @@
     margin: .2rem 0;
 }
 
-.mui-dtpicker {
-    .mui-dtpicker-header {
+.mui-dtpicker,
+.mui-poppicker {
+    .mui-dtpicker-header,
+    .mui-poppicker-header {
         .mui-btn-blue {
             border: 1px solid #5CC166;
             background-color: #5CC166;
         }
     }
     .mui-pciker-list li.highlight {
+        color: #5CC166;
+    }
+    .mui-dtpicker-list li.highlight {
         color: #5CC166;
     }
 }

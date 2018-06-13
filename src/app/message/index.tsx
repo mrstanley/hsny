@@ -15,12 +15,14 @@ interface AppState {
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
+    public userInfo
     constructor(props: AppProps) {
         super(props);
         this.state = { count: 0, list: [], page: 0 };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             plus.navigator.setStatusBarStyle("light");
+            this.userInfo = Utils.getSettings("userInfo");
         });
     }
     componentDidMount() {
@@ -45,8 +47,9 @@ export default class App extends Component<AppProps, AppState> {
         });
     }
     getMessages({ page }) {
+        let userId = this.userInfo.userId;
         Service.getMessage({
-            query: `{msgs(page:${page},size:10){totalCount,pageData{queryAll}}}`
+            query: `{msgs(acceptUserId:${userId},page:${page},size:10){totalCount,pageData{queryAll}}}`
         }).then((data: any) => {
             if (data.msgs.length) {
                 let list = data.msgs[0].pageData;
