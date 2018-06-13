@@ -79,7 +79,7 @@ export default class App extends Component<AppProps, AppState> {
                 <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
                     <div class="mui-scroll">
                         {state.list.map((item: any) => (
-                            <div className="item">
+                            <div className="item" {...{ onTap: () => Utils.openPage("messageDetail", { msgId: item.id }) }}>
                                 <div className="title">
                                     <h3>{item.title}</h3>
                                     <span className="time">{item.createTime.split(".")[0]}</span>
