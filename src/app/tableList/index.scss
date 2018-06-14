@@ -1,0 +1,58 @@
+.tableList {
+    .mui-content {
+        background-color: #ffffff;
+        .item {
+            padding: 0.4rem .4rem .32rem;
+            position: relative;
+            .table-row {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                &.table-row-title {
+                    height: .4rem;
+                    line-height: 0.4rem;
+                    .table-col {
+                        font-size: .28rem;
+                        height: 0.4rem;
+                        line-height: 0.4rem;
+                    }
+                }
+                &.table-row-item {
+                    .table-col {
+                        font-size: .3rem;
+                        height: 0.42rem;
+                        line-height: 0.42rem;
+                        margin-top: 0.34rem;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+                .table-col {
+                    width: 50%;
+                    label {
+                        color: #999999;
+                        font-size: .3rem;
+                    }
+                    .text {
+                        color: #333333;
+                        padding: 0 .2rem;
+                        font-size: .24rem;
+                    }
+                    .iconfont {
+                        color: #5CC166;
+                        padding: .1rem;
+                    }
+                }
+            }
+            &::after {
+                content: " ";
+                height: 0.02rem;
+                background-color: #f7f7f7;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+    }
+}

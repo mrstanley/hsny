@@ -26,6 +26,15 @@ let message = {
 let serviceData = {
     serviceDataAdd: params => {
         return fetch('post', `${REMOTE}/serviceData/add`, params);
+    },
+    serviceDataList: params => {
+        let page = params.page;
+        delete params.page;
+        return fetch('post', `${REMOTE}/serviceData/list/${page}/6`, params);
+    },
+    // /v1/serviceData/serviceDataUpload 上传
+    serviceDataUpload: params => {
+        return fetch('get', `${REMOTE}/serviceData/serviceDataUpload?tableId=${params.tableId}`);
     }
 };
 // 虚拟表数据

@@ -32,7 +32,7 @@ export default class App extends Component<AppProps, AppState> {
         };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
-            this.setState({ title: this.view.table.collectAreaName });
+            this.setState({ title: this.view.table.anotherName });
             this.getTableDetail();
         });
     }
@@ -109,10 +109,15 @@ export default class App extends Component<AppProps, AppState> {
         });
         return JSON.stringify(data);
     }
-    changeState(params) {
-        Service.updateStateOrUseState(params).then(data => {
-            mui.fire(this.view.opener(), "reloadData");
+    async saveData(params) {
+        let tableId = params.virtualTableId;
+        await Service.serviceDataAdd(params);
+        await Service.updateStateOrUseState({
+            state: 1003,
+            tableId
         });
+        mui.fire(this.view.opener(), "reloadData");
+        mui.back();
     }
     handComplete() {
         plus.nativeUI.confirm('确认添加？', ({ index }) => {
@@ -121,15 +126,10 @@ export default class App extends Component<AppProps, AppState> {
                 if (isValidate) {
                     let value = this.formartData();
                     let { id } = this.view.table;
-                    Service.serviceDataAdd({
+                    this.saveData({
                         value,
                         virtualTableId: id
-                    }).then(data => {
-                        this.changeState({
-                            state: 1003,
-                            tableId: id
-                        });
-                    })
+                    });
                 }
             }
         });
@@ -140,7 +140,7 @@ export default class App extends Component<AppProps, AppState> {
             <div className="app-container addData">
                 <header id="header" class="mui-bar mui-bar-nav">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
-                    <h1 class="mui-title">添加{title}</h1>
+                    <h1 class="mui-title">添加表数据</h1>
                 </header>
                 <div className="mui-content">
                     <div className="fields">

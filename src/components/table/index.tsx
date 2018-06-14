@@ -1,4 +1,4 @@
-declare const mui;
+declare const mui, plus;
 
 import "./index.scss";
 import { h, Component } from "preact";
@@ -19,7 +19,7 @@ interface AppState {
 }
 
 export default class App extends Component<AppProps, AppState> {
-    public userInfo
+    public userInfo;
     constructor(props: AppProps) {
         super(props);
         this.state = {
@@ -85,9 +85,31 @@ export default class App extends Component<AppProps, AppState> {
             });
         }
     }
+    async dataUpLoad(params) {
+        try {
+            await Service.serviceDataUpload(params);
+            mui.fire(plus.webview.currentWebview(), "reloadData");
+            plus.nativeUI.closeWaiting();
+            mui.toast("上传成功");
+        } catch (error) {
+            plus.nativeUI.closeWaiting();
+            mui.toast("上传失败");
+        }
+        await Service.updateStateOrUseState({
+            state: 1002,
+            tableId: params.tableId
+        });
+    }
     handleUpload(data) {
         if (data.state == 1003) {
-            mui.toast("上传成功");
+            plus.nativeUI.confirm('确认上传？', ({ index }) => {
+                if (index == 0) {
+                    plus.nativeUI.showWaiting("上传中...");
+                    this.dataUpLoad({
+                        tableId: data.id
+                    });
+                }
+            });
         }
     }
     render(props: AppProps, state: AppState) {

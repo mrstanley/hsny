@@ -44,7 +44,6 @@ export default class App extends Component<AppProps, AppState> {
         };
         this.init(() => {
             this.login();
-            this.getDict();
             Utils.hideScroll();
             mui.later(() => {
                 plus.navigator.setStatusBarStyle("dark");
@@ -69,12 +68,14 @@ export default class App extends Component<AppProps, AppState> {
             Utils.openPage("login", { from: { barStyle: "dark", name: "main" } });
         } else {
             this.getCollectAreaList();
+            this.getDict();
         }
     }
     componentDidMount() {
         Utils.setImmersed();
         this.listener("login", () => {
             this.getCollectAreaList();
+            this.getDict();
         });
     }
     handleOpenPage(item: any) {
