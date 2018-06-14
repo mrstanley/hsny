@@ -64,6 +64,31 @@ export default class App extends Component<AppProps, AppState> {
             })
         })
     }
+    componentDidMount() {
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                down: {
+                    style: 'circle',
+                    height: Utils.Px(150),
+                    range: Utils.Px(250),
+                    offset: Utils.Px(130),
+                    callback: this.pulldownRefresh.bind(this)
+                }
+            }
+        });
+    }
+    pulldownRefresh() {
+        let pullrefresh = mui('#pullrefresh')
+        pullrefresh.pullRefresh().endPulldownToRefresh();
+        pullrefresh.pullRefresh().refresh(true);
+        this.setState({ list: [], loading: true });
+        this.getTableData({
+            page: 1,
+            operatorId: this.userInfo.userId,
+            collectAreaId: this.props.collectAreaId
+        });
+    }
     getTableData(params: any) {
         Service.getVirtualTableList(params).then((data: any) => {
             let { totalCount, pageData } = data;
@@ -118,7 +143,7 @@ export default class App extends Component<AppProps, AppState> {
     render(props: AppProps, state: AppState) {
         let { list, loading } = state;
         return (
-            <div class="app-table">
+            <div class="app-table" id="pullrefresh">
                 <div className="app-table-filter  app-table-border">
                     {state.filters.map((item: any, i: number) => (
                         <span className={i == state.active ? "mui-active" : ""} {...{ onTap: this.handleChangeState.bind(this, i) }}>{item.name}</span>

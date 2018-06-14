@@ -1,7 +1,7 @@
 {
     "@platforms": ["android", "iPhone"],
     "id": "H5F1BFE2E",
-    "name": "华盛农业",
+    "name": "华胜农业",
     "version": {
         "name": "0.0.1",
         "code": "83"
@@ -33,7 +33,7 @@
         "Console": {
             "description": "跟踪调试输出日志"
         },
-        
+
         "Device": {
             "description": "访问设备信息"
         },
@@ -55,7 +55,7 @@
         "Invocation": {
             "description": "使用Native.js能力"
         },
-        
+
         "Orientation": {
             "description": "访问方向感应器"
         },
@@ -81,7 +81,7 @@
         "Barcode": {
             "description": "管理二维码扫描插件"
         },
-        
+
         "Webview": {
             "description": "窗口管理"
         },
@@ -93,7 +93,7 @@
         },
         "NativeObj": {
             "description": "原生对象"
-        }
+        },"Maps":{},"Share":{},"Payment":{}
     },
     "plus": {
         "hardwareAccelerated": true,
@@ -154,7 +154,8 @@
             },
             "orientation": ["portrait-primary", "portrait-secondary"],
             "icons": {
-                "ios": {"ipad":{"app":"unpackage/res/icons/76x76.png","app@2x":"unpackage/res/icons/152x152.png","settings":"unpackage/res/icons/29x29.png","proapp@2x":"unpackage/res/icons/167x167.png","spotlight":"unpackage/res/icons/40x40.png","settings@2x":"unpackage/res/icons/58x58.png","spotlight@2x":"unpackage/res/icons/80x80.png","notification":"unpackage/res/icons/20x20.png","notification@2x":"unpackage/res/icons/40x40.png"},
+                "ios": {
+                    "ipad": { "app": "unpackage/res/icons/76x76.png", "app@2x": "unpackage/res/icons/152x152.png", "settings": "unpackage/res/icons/29x29.png", "proapp@2x": "unpackage/res/icons/167x167.png", "spotlight": "unpackage/res/icons/40x40.png", "settings@2x": "unpackage/res/icons/58x58.png", "spotlight@2x": "unpackage/res/icons/80x80.png", "notification": "unpackage/res/icons/20x20.png", "notification@2x": "unpackage/res/icons/40x40.png" },
                     "prerendered": true,
                     "iphone": {
                         "normal": "",
