@@ -36,10 +36,23 @@ export default class App extends Component<AppProps, AppState> {
             this.getTableDetail();
         });
     }
+    getRecordDetail(id) {
+        Service.serviceDataDetailById({ id }).then((data: any) => {
+            let values = JSON.parse(data.value);
+            this.state.fields.forEach((item: any, index: number) => {
+                if (typeof values[item.name] != "undefined") {
+                    this.updateFieldsData(index, { value: values[item.name] });
+                }
+            });
+        })
+    }
     getTableDetail() {
         let { id } = this.view.table;
         Service.getVirtualTableDetailById({ id }).then((data: any) => {
             this.initfieldsData(data.virtualColAddVos);
+            if (this.view.recordId) {
+                this.getRecordDetail(this.view.recordId);
+            }
         }).catch(error => {
             this.setState({ loading: false });
         });
@@ -111,16 +124,31 @@ export default class App extends Component<AppProps, AppState> {
     }
     async saveData(params) {
         let tableId = params.virtualTableId;
-        await Service.serviceDataAdd(params);
+        try {
+            if (!this.view.recordId) {
+                await Service.serviceDataAdd(params);
+            } else {
+                await Service.serviceDataUpdate({
+                    id: this.view.recordId,
+                    ...params
+                })
+            }
+        } catch (error) {
+            mui.toast(`${this.view.recordId ? "更新" : "添加"}数据失败`);
+        }
         await Service.updateStateOrUseState({
             state: 1003,
             tableId
         });
-        this.view.opener().id != "tableList" && mui.fire(this.view.opener(), "reloadData");
+        if (this.view.opener().id != "tableList") {
+            mui.fire(this.view.opener(), "reloadData")
+        } else {
+            mui.fire(this.view.opener().opener(), "reloadData");
+        }
         mui.back();
     }
     handComplete() {
-        plus.nativeUI.confirm('确认添加？', ({ index }) => {
+        plus.nativeUI.confirm(`确认${this.view.recordId ? "更新" : "添加"}？`, ({ index }) => {
             if (index == 0) {
                 let isValidate = this.validate();
                 if (isValidate) {
@@ -140,7 +168,7 @@ export default class App extends Component<AppProps, AppState> {
             <div className="app-container addData">
                 <header id="header" class="mui-bar mui-bar-nav">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
-                    <h1 class="mui-title">添加表数据</h1>
+                    <h1 class="mui-title">{this.view && this.view.recordId ? "编辑" : "添加"}表数据</h1>
                 </header>
                 <div className="mui-content">
                     <div className="fields">
@@ -163,7 +191,7 @@ export default class App extends Component<AppProps, AppState> {
                         {fields.length > 0 && (
                             <div className="fields-btns">
                                 <div className="btn">继续添加</div>
-                                <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成添加</div>
+                                <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成{this.view && this.view.recordId ? "编辑" : "添加"}</div>
                             </div>
                         )}
                     </div>

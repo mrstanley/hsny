@@ -30,11 +30,19 @@ let serviceData = {
     serviceDataList: params => {
         let page = params.page;
         delete params.page;
-        return fetch('post', `${REMOTE}/serviceData/list/${page}/6`, params);
+        return fetch('post', `${REMOTE}/serviceData/list/${page}/10`, params);
     },
     // /v1/serviceData/serviceDataUpload 上传
     serviceDataUpload: params => {
         return fetch('get', `${REMOTE}/serviceData/serviceDataUpload?tableId=${params.tableId}`);
+    },
+    // /v1/serviceData/detailById 查询业务数据
+    serviceDataDetailById: params => {
+        return fetch('get', `${REMOTE}/serviceData/detailById?id=${params.id}`);
+    },
+    // /v1/serviceData/update
+    serviceDataUpdate: params => {
+        return fetch('post', `${REMOTE}/serviceData/update`, params);
     }
 };
 // 虚拟表数据

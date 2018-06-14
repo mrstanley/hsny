@@ -34,8 +34,11 @@ export default class App extends Component<AppProps, AppState> {
                 name: "已完成",
                 state: 1002
             }, {
-                name: "未完成",
+                name: "去完成",
                 state: 1001
+            }, {
+                name: "未完成",
+                state: 1003
             }]
         };
     }

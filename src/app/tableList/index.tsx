@@ -53,7 +53,7 @@ export default class App extends Component<AppProps, AppState> {
         }).then((data: any) => {
             let list = data.result.pageData;
             this.setState({ list: reload ? list : this.state.list.concat(list), page });
-            mui('#pullrefresh').pullRefresh().endPullupToRefresh((list.length < 6));
+            mui('#pullrefresh').pullRefresh().endPullupToRefresh((list.length < 10));
         });
     }
     pulldownRefresh() {
@@ -74,6 +74,10 @@ export default class App extends Component<AppProps, AppState> {
             });
         }, 1000);
     }
+    handleEdit(info) {
+        let { id } = info;
+        Utils.openPage("addData", { table: this.view.table, recordId: id })
+    }
     render(props: AppProps, state: AppState) {
         return (
             <div className="app-container tableList">
@@ -90,7 +94,7 @@ export default class App extends Component<AppProps, AppState> {
                                 <div className="item">
                                     <div className="table-row table-row-title">
                                         <div className="table-col"> <label>第{index + 1}条记录</label> </div>
-                                        <div className="table-col"><span class="iconfont icon-edit mui-pull-right"></span></div>
+                                        <div className="table-col"><span class="iconfont icon-edit mui-pull-right" {...{ onTap: () => this.handleEdit(item) }}></span></div>
                                     </div>
                                     <div className="table-row table-row-item">
                                         {Object.keys(values).map(field => (

@@ -46,14 +46,15 @@ export default class App extends Component<AppProps, AppState> {
             }
         });
     }
-    getMessages({ page }) {
+    getMessages(params) {
+        let { page, reload } = params;
         let userId = this.userInfo.userId;
         Service.getMessage({
             query: `{msgs(acceptUserId:${userId},page:${page},size:10){totalCount,pageData{queryAll}}}`
         }).then((data: any) => {
             if (data.msgs.length) {
                 let list = data.msgs[0].pageData;
-                this.setState({ list: this.state.list.concat(list), page });
+                this.setState({ list: reload ? list : this.state.list.concat(list), page });
                 mui('#pullrefresh').pullRefresh().endPullupToRefresh((list.length < 10));
             } else {
                 mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
@@ -62,7 +63,13 @@ export default class App extends Component<AppProps, AppState> {
     }
     pulldownRefresh() {
         setTimeout(() => {
-            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+            let pullrefresh = mui('#pullrefresh')
+            pullrefresh.pullRefresh().endPulldownToRefresh();
+            pullrefresh.pullRefresh().refresh(true);
+            this.getMessages({
+                page: 1,
+                reload: true
+            });
         }, 1000);
     }
     pullupRefresh() {
