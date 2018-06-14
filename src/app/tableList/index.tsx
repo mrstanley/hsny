@@ -44,20 +44,27 @@ export default class App extends Component<AppProps, AppState> {
             }
         });
     }
-    getTableList({ page }) {
+    getTableList(params) {
+        let { page, reload } = params;
         Service.serviceDataList({
             page,
             parentId: this.state.info.parentTableId,
             virtualTableIds: [this.state.info.id]
         }).then((data: any) => {
             let list = data.result.pageData;
-            this.setState({ list: this.state.list.concat(list), page });
+            this.setState({ list: reload ? list : this.state.list.concat(list), page });
             mui('#pullrefresh').pullRefresh().endPullupToRefresh((list.length < 6));
         });
     }
     pulldownRefresh() {
         setTimeout(() => {
-            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+            let pullrefresh = mui('#pullrefresh')
+            pullrefresh.pullRefresh().endPulldownToRefresh();
+            pullrefresh.pullRefresh().refresh(true);
+            this.getTableList({
+                page: 1,
+                reload: true
+            });
         }, 1000);
     }
     pullupRefresh() {

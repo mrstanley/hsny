@@ -116,7 +116,7 @@ export default class App extends Component<AppProps, AppState> {
             state: 1003,
             tableId
         });
-        mui.fire(this.view.opener(), "reloadData");
+        this.view.opener().id != "tableList" && mui.fire(this.view.opener(), "reloadData");
         mui.back();
     }
     handComplete() {
