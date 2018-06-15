@@ -29,7 +29,7 @@ export default class App extends Component<AppProps, AppState> {
         Service.appPersonCenterStatictics({}).then((data: any) => {
             let { collectStatisticsVos } = data;
             let upnum = collectStatisticsVos.map(item => item.uploadCount);
-            let max = Math.max(...upnum);
+            let max = Math.max.apply(null, upnum);
             this.setState({ collectStatisticsVos, max });
         });
     }

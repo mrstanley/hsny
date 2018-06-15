@@ -166,11 +166,11 @@ export default class App extends Component<AppProps, AppState> {
                                         <div className="status">{this.getState(item.state)}</div>
                                         <div className="option">
                                             {item.state == 1001 && (
-                                                <span alt="" {...{ onTap: () => Utils.openPage("addData", { table: item }) }} >添加</span>
+                                                <span alt="" {...{ onTap: () => Utils.openPage("addData", { table: { ...item, viewId: plus.webview.currentWebview().id } }) }} >添加</span>
                                             )}
                                             {(item.state == 1002 || item.state == 1003) && (
                                                 <div>
-                                                    <span alt="" {...{ onTap: () => Utils.openPage("tableList", { table: item }) }} >预览</span>
+                                                    <span alt="" {...{ onTap: () => Utils.openPage("tableList", { table: { ...item, viewId: plus.webview.currentWebview().id } }) }} >预览</span>
                                                     <span className={item.state == 1002 ? "gray" : ""} {...{ onTap: this.handleUpload.bind(this, item) }}>上传</span>
                                                 </div>
                                             )}

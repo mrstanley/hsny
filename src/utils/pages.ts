@@ -113,7 +113,7 @@ export default {
         } else {
             const options: any = {
                 url: "../" + page + "/index.html",
-                id: param.createNew ? "new_" + page : page,
+                id: param.createNew ? `new_${Date.now()}_` + page : page,
                 show: {
                     aniShow: moveType,
                     duration: 250,

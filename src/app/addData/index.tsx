@@ -140,11 +140,7 @@ export default class App extends Component<AppProps, AppState> {
             state: 1003,
             tableId
         });
-        if (this.view.opener().id != "tableList") {
-            mui.fire(this.view.opener(), "reloadData")
-        } else {
-            mui.fire(this.view.opener().opener(), "reloadData");
-        }
+        mui.fire(plus.webview.getWebviewById(this.view.table.viewId), "reloadData");
         mui.back();
     }
     handComplete() {
@@ -190,7 +186,7 @@ export default class App extends Component<AppProps, AppState> {
                         )) : <div className="fields-noData">{loading ? "初始化中..." : "暂无字段信息"}</div>}
                         {fields.length > 0 && (
                             <div className="fields-btns">
-                                <div className="btn">继续添加</div>
+                                <div className="btn" {...{ onTap: () => Utils.openPage("addData", { table: this.view.table, createNew: true }) }}>继续添加</div>
                                 <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成{this.view && this.view.recordId ? "编辑" : "添加"}</div>
                             </div>
                         )}
