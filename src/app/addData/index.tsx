@@ -144,10 +144,10 @@ export default class App extends Component<AppProps, AppState> {
         mui.back();
     }
     handComplete() {
-        plus.nativeUI.confirm(`确认${this.view.recordId ? "更新" : "添加"}？`, ({ index }) => {
-            if (index == 0) {
-                let isValidate = this.validate();
-                if (isValidate) {
+        let isValidate = this.validate();
+        if (isValidate) {
+            plus.nativeUI.confirm(`确认${this.view.recordId ? "更新" : "添加"}？`, ({ index }) => {
+                if (index == 0) {
                     let value = this.formartData();
                     let { id } = this.view.table;
                     this.saveData({
@@ -155,8 +155,8 @@ export default class App extends Component<AppProps, AppState> {
                         virtualTableId: id
                     });
                 }
-            }
-        });
+            });
+        }
     }
     render(props: AppProps, state: AppState) {
         let { title, fields, loading } = state;
