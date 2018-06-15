@@ -22,6 +22,7 @@ const options = {
     publicURL: '../',
     watch: true,
     hmr: false,
+    cache: false,
     sourceMaps: false
 };
 

@@ -57,6 +57,10 @@ let getTableData = {
     },
     getVirtualTableDetailById: params => {
         return fetch('get', `${REMOTE}/virtualTable/detailById?id=${params.id}`);
+    },
+    // /v1/virtualTable/appPersonCenterStatictics
+    appPersonCenterStatictics: params => {
+        return fetch('get', `${REMOTE}/virtualTable/appPersonCenterStatictics`);
     }
 };
 

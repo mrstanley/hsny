@@ -13,9 +13,9 @@ export default {
         }
     }
     // 存取 cookie
-    , setCookie(key: string, value: any, time?: number): void {
-        const expires: any = new Date(Date.now() + (time || 86400) * 1000);
-        key && value && plus.navigator.setCookie(ROOT, key + "=" + value + "; expires=" + expires.toGMTString().replace(" ", "") + "; path=/");
+    , setCookie(key: string, value: string, time?: number): void {
+        const expires: any = new Date(Date.now() + (!!value ? (time || 24) * 3600000 : 0));
+        key && plus.navigator.setCookie(ROOT, key + "=" + value + "; expires=" + expires.toGMTString().replace(" ", "") + "; path=/");
     }
     , getCookie(key: string): string {
         const cookieStr = plus.navigator.getCookie(ROOT);

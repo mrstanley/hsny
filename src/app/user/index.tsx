@@ -3,22 +3,34 @@ declare const plus, mui, require;
 import { h, render, Component } from "preact";
 import Mixins from "../../components/base";
 import Utils from "../../utils";
+import Service from "../../server";
 
 interface AppProps { }
 interface AppState {
     max: number;
+    collectStatisticsVos: any;
 }
 
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
+    public view;
     constructor(props: AppProps) {
         super(props);
-        this.state = { max: 25 };
+        this.state = { max: 25, collectStatisticsVos: [] };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             plus.navigator.setStatusBarStyle("light");
             Utils.hideScroll();
+        });
+        this.getData();
+    }
+    getData() {
+        Service.appPersonCenterStatictics({}).then((data: any) => {
+            let { collectStatisticsVos } = data;
+            let upnum = collectStatisticsVos.map(item => item.uploadCount);
+            let max = Math.max(...upnum);
+            this.setState({ collectStatisticsVos, max });
         });
     }
     componentDidMount() {
@@ -39,13 +51,17 @@ export default class App extends Component<AppProps, AppState> {
     }
     pulldownRefresh() {
         setTimeout(() => {
-            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+            let pullrefresh = mui('#pullrefresh')
+            pullrefresh.pullRefresh().endPulldownToRefresh();
+            this.getData();
         }, 1000);
     }
     getPresent(num) {
         return (num / this.state.max) * 100 + "%";
     }
     handleLogout() {
+        Utils.setCookie("authorization", null);
+        mui.back();
         mui.toast("退出成功");
     }
     handleSetting() {
@@ -87,70 +103,27 @@ export default class App extends Component<AppProps, AppState> {
                     </div>
                     <div className="dataChart">
                         <h3>历史上传数</h3>
-                        <div className="charts">
-                            <div className="item">
-                                <div className="title">农机设备管理</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(10) }}></div>
-                                    <span>10</span>
+                        {state.collectStatisticsVos.length > 0 ? (
+                            <div className="charts">
+                                {state.collectStatisticsVos.map(item => (
+                                    <div className="item">
+                                        <div className="title">{item.collectAreaName}</div>
+                                        <div className="count">
+                                            <div className="len" style={{ width: this.getPresent(item.uploadCount) }}></div>
+                                            <span>{item.uploadCount}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className="item">
+                                    <div className="title">（张）</div>
+                                    <div className="count-x">
+                                        {list}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="item">
-                                <div className="title">栽培历</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(22) }}></div>
-                                    <span>22</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">挖土深根</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(17) }}></div>
-                                    <span>17</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">土肥与营养</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(14) }}></div>
-                                    <span>14</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">农机活动</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(11) }}></div>
-                                    <span>11</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">枝蔓管理</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(13) }}></div>
-                                    <span>13</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">植保管理</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(14) }}></div>
-                                    <span>14</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">虫病情</div>
-                                <div className="count">
-                                    <div className="len" style={{ width: this.getPresent(18) }}></div>
-                                    <span>18</span>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="title">（张）</div>
-                                <div className="count-x">
-                                    {list}
-                                </div>
-                            </div>
-                        </div>
+                        ) : (
+                                <div className="noData">暂无数据</div>
+                            )}
                     </div>
                 </div>
             </div>
