@@ -20,7 +20,6 @@ let outDir = './dist' + dir;
 const options = {
     outDir: outDir + '/pages',
     publicURL: '../',
-    watch: true,
     hmr: false,
     cache: false,
     sourceMaps: false

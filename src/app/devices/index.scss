@@ -1,6 +1,8 @@
+@import '../../common/scss/chart.scss';
 .devices {
-    height: 100vh;
-    .mui-bar {
-        box-shadow: none;
+    .bagging-wrap {
+        .bagging-item {
+            width: 50% !important;
+        }
     }
 }

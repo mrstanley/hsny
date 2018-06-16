@@ -10,6 +10,8 @@ import Service from "../../server";
 interface AppProps { }
 interface AppState {
     collectAreaId: string;
+    loading: boolean;
+    equipData: any;
 }
 
 export default class App extends Component<AppProps, AppState> {
@@ -18,26 +20,30 @@ export default class App extends Component<AppProps, AppState> {
     public view
     constructor(props: AppProps) {
         super(props);
+        this.state = { loading: true, equipData: null, collectAreaId: "" };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             let { collectAreaId } = this.view.params;
             this.setState({ collectAreaId });
             plus.navigator.setStatusBarStyle("light");
             Utils.hideScroll();
-            this.getChartData()
+            this.getData()
         });
     }
-    getChartData() {
-        Service.equipManage({
-            devAddr: 3
-        })
+    async getData() {
+        let userInfo = Utils.getSettings("userInfo");
+        let equipPromise = Service.equipManage({ devAddr: userInfo.farmingBaseId });
+        let equipData: any = await equipPromise.catch(() => {
+            this.setState({ loading: false });
+        });
+        this.setState({ loading: false, equipData });
     }
     componentDidMount() {
         Utils.setImmersed();
         Utils.handleBack();
     }
     render(props: AppProps, state: AppState) {
-        let { collectAreaId } = state;
+        let { collectAreaId, equipData, loading } = state;
         return (
             <div className="app-container devices">
                 <header id="header" class="mui-bar mui-bar-nav">
@@ -47,8 +53,26 @@ export default class App extends Component<AppProps, AppState> {
                 <div class="mui-content">
                     <TabScroll>
                         <Table collectAreaId={collectAreaId}></Table>
-                        <div className="charts">
-
+                        <div className="chart">
+                            {!loading && equipData && (
+                                <div className="chart-panel">
+                                    <div className="chart-panel-header">借出设备（当月）</div>
+                                    <div className="chart-panel-item">
+                                        <div className="bagging-wrap">
+                                            <div className="bagging-item">
+                                                <label>在场设备个数</label>
+                                                <span className="text">10</span>
+                                            </div>
+                                            <div className="bagging-item">
+                                                <label>借出设备个数</label>
+                                                <span className="text">10</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {!loading && !equipData && (<div className="noData">暂无数据</div>)}
+                            {loading && (<div className="loading">加载中...</div>)}
                         </div>
                     </TabScroll>
                 </div>
