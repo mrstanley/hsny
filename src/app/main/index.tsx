@@ -26,11 +26,14 @@ export default class App extends Component<AppProps, AppState> {
                 icon: "icon-CB",
                 name: "disease"
             }, {
-                icon: "icon-ZB"
+                icon: "icon-ZB",
+                name: "plantProtect"
             }, {
-                icon: "icon-HG"
+                icon: "icon-HG",
+                name: "flowerFruits"
             }, {
-                icon: "icon-ZM"
+                icon: "icon-ZM",
+                name: "branch"
             }, {
                 icon: "icon-NH",
                 name: "farming"
