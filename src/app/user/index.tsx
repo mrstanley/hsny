@@ -9,6 +9,8 @@ interface AppProps { }
 interface AppState {
     max: number;
     collectStatisticsVos: any;
+    todayUploadNum: number;
+    yesterdayUploadNum: number;
 }
 
 export default class App extends Component<AppProps, AppState> {
@@ -17,7 +19,7 @@ export default class App extends Component<AppProps, AppState> {
     public view;
     constructor(props: AppProps) {
         super(props);
-        this.state = { max: 25, collectStatisticsVos: [] };
+        this.state = { max: 25, collectStatisticsVos: [], yesterdayUploadNum: 0, todayUploadNum: 0 };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             plus.navigator.setStatusBarStyle("light");
@@ -27,10 +29,10 @@ export default class App extends Component<AppProps, AppState> {
     }
     getData() {
         Service.appPersonCenterStatictics({}).then((data: any) => {
-            let { collectStatisticsVos } = data;
+            let { collectStatisticsVos, todayUploadNum, yesterdayUploadNum } = data;
             let upnum = collectStatisticsVos.map(item => item.uploadCount);
             let max = Math.max.apply(null, upnum);
-            this.setState({ collectStatisticsVos, max });
+            this.setState({ collectStatisticsVos, max, todayUploadNum, yesterdayUploadNum });
         });
     }
     componentDidMount() {
@@ -61,8 +63,11 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleLogout() {
         Utils.setCookie("authorization", null);
-        mui.back();
         mui.toast("退出成功");
+        Utils.openPage("login", { from: { barStyle: "black", name: "main" } });
+        mui.later(() => {
+            this.view.close("none");
+        }, 800);
     }
     handleSetting() {
         plus.nativeUI.actionSheet({
@@ -93,11 +98,11 @@ export default class App extends Component<AppProps, AppState> {
                 <div className="mui-content" id="pullrefresh">
                     <div className="overview">
                         <div className="total">
-                            <h1>0</h1>
+                            <h1>{state.todayUploadNum}</h1>
                             <span>今日上传</span>
                         </div>
                         <div className="total">
-                            <h1>10</h1>
+                            <h1>{state.yesterdayUploadNum}</h1>
                             <span>昨日上传</span>
                         </div>
                     </div>

@@ -32,7 +32,7 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleLogin(ev: Event) {
         if (!this.state.userAccount || !this.state.password)
-            return mui.toast("请输入账号或密码");
+            return mui.toast("请输入正确的账号和密码");
         plus.nativeUI.showWaiting("登录中...");
         this.setState({ isLogin: true });
         Server.login({
