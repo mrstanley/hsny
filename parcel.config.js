@@ -21,7 +21,7 @@ const options = {
     outDir: outDir + '/pages',
     publicURL: '../',
     hmr: false,
-    cache: false,
+    // cache: true,
     sourceMaps: false
 };
 
