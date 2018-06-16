@@ -9,6 +9,7 @@ interface AppProps { }
 interface AppState {
     icons: any[];
     menus: object[];
+    hasMenus: object[];
 }
 
 export default class App extends Component<AppProps, AppState> {
@@ -20,6 +21,7 @@ export default class App extends Component<AppProps, AppState> {
         this.mixins.forEach(m => Object.assign(this, m));
         this.state = {
             menus: [],
+            hasMenus: [],
             icons: [{}, {
                 icon: "icon-CB",
                 name: "disease"
@@ -56,7 +58,7 @@ export default class App extends Component<AppProps, AppState> {
     getCollectAreaList() {
         Service.getCollectAreaList({}).then((data: any) => {
             let { pageData } = data;
-            this.setState({ menus: pageData });
+            this.setState({ menus: pageData, hasMenus: Utils.getSettings("userInfo").collectAreaIds });
         });
     }
     getDict() {
@@ -81,13 +83,15 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleOpenPage(item: any) {
         let { name } = this.state.icons[item.id];
-        name && (() => {
+        if (name && this.state.hasMenus.indexOf(item.id) >= 0) {
             if (Utils.getCookie("authorization")) {
                 Utils.openPage(name, { from: { barStyle: "dark" }, params: { collectAreaId: item.id } });
             } else {
                 Utils.openPage("login", { from: { barStyle: "dark" } });
             }
-        })()
+        } else {
+            mui.toast("暂无权限");
+        }
     }
     handleIsLogin(page) {
         if (Utils.getCookie("authorization")) {
@@ -97,7 +101,7 @@ export default class App extends Component<AppProps, AppState> {
         }
     }
     render(props: AppProps, state: AppState) {
-        let { menus, icons } = state;
+        let { menus, icons, hasMenus } = state;
         return (
             <div className="app-container main">
                 <header className="app-header">
@@ -111,7 +115,7 @@ export default class App extends Component<AppProps, AppState> {
                     {menus.length ? (
                         <ul class="nav mui-table-view mui-grid-view mui-grid-9">
                             {menus.map((item: any) => (
-                                <li class="mui-table-view-cell mui-media mui-col-xs-6">
+                                <li className={"mui-table-view-cell mui-media mui-col-xs-6 " + ((hasMenus.indexOf(item.id) < 0 || !icons[item.id].name) ? "mui-disabled" : "")}>
                                     <a {...{ onTap: this.handleOpenPage.bind(this, item) }} href="javascript:;">
                                         <span className={"iconfont " + icons[item.id].icon}></span>
                                         <div class="mui-media-body">{item.name}</div>
