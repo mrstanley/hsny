@@ -64,24 +64,21 @@ export default class App extends Component<AppProps, AppState> {
             })
         })
     }
-    componentDidMount() {
-        mui.init({
-            pullRefresh: {
-                container: '#pullrefresh',
-                down: {
-                    style: 'circle',
-                    height: Utils.Px(150),
-                    range: Utils.Px(250),
-                    offset: Utils.Px(130),
-                    callback: this.pulldownRefresh.bind(this)
+    pullToRefresh(ref) {
+        let self = this;
+        mui(ref).pullToRefresh({
+            down: {
+                height: 150,
+                callback: function () {
+                    self.pulldownRefresh();
+                    setTimeout(() => {
+                        this.endPullDownToRefresh()
+                    }, 1000);
                 }
             }
-        });
+        })
     }
     pulldownRefresh() {
-        let pullrefresh = mui('#pullrefresh')
-        pullrefresh.pullRefresh().endPulldownToRefresh();
-        pullrefresh.pullRefresh().refresh(true);
         this.setState({ list: [], loading: true });
         this.getTableData({
             page: 1,
@@ -157,7 +154,7 @@ export default class App extends Component<AppProps, AppState> {
                 </div>
                 <div className="app-table-wrap">
                     <div id="scroll" class="mui-scroll-wrapper">
-                        <div class="mui-scroll">
+                        <div class="mui-scroll" ref={this.pullToRefresh.bind(this)}>
                             <div className="table-wrap">
                                 {list.length > 0 ? list.map((item, index) => (
                                     <div className="app-table-item app-table-row">

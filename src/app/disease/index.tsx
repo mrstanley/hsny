@@ -32,7 +32,7 @@ export default class App extends Component<AppProps, AppState> {
     render(props: AppProps, state: AppState) {
         let { collectAreaId } = state;
         return (
-            <div className="app-container congbingqing">
+            <div className="app-container disease">
                 <header id="header" class="mui-bar mui-bar-nav">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
                     <h1 class="mui-title">虫病情数据</h1>

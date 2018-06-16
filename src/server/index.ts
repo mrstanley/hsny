@@ -51,6 +51,18 @@ let visualStatistic = {
     farmingManage: params => fetch('get', `${REMOTE}/visualStatistic/farmingManage?devAddr=${params.devAddr}`)
 }
 
+// farming 农业基地
+
+let farmingBase = {
+    // /v1/farmingBase/list/{page}/{size}
+    farmingBaseList: params => {
+        let page = params.page;
+        delete params.page;
+        return fetch('post', `${REMOTE}/farmingBase/list/${page}/10`, params);
+    }
+}
+
+
 export default {
     dict,
     login,
@@ -58,5 +70,6 @@ export default {
     ...message,
     ...getTableData,
     ...serviceData,
-    ...visualStatistic
+    ...visualStatistic,
+    ...farmingBase
 }

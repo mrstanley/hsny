@@ -30,7 +30,8 @@ export default class App extends Component<AppProps, AppState> {
             }, {
                 icon: "icon-ZM"
             }, {
-                icon: "icon-NH"
+                icon: "icon-NH",
+                name: "farming"
             }, {
                 icon: "icon-TF"
             }, {
@@ -80,7 +81,13 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleOpenPage(item: any) {
         let { name } = this.state.icons[item.id];
-        name && Utils.openPage(name, { from: { barStyle: "dark" }, params: { collectAreaId: item.id } });
+        name && (() => {
+            if (Utils.getCookie("authorization")) {
+                Utils.openPage(name, { from: { barStyle: "dark" }, params: { collectAreaId: item.id } });
+            } else {
+                Utils.openPage("login", { from: { barStyle: "dark" } });
+            }
+        })()
     }
     handleIsLogin(page) {
         if (Utils.getCookie("authorization")) {

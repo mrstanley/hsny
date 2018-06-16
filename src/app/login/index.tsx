@@ -39,6 +39,7 @@ export default class App extends Component<AppProps, AppState> {
             password: Base64.encode(this.state.password),
             userAccount: this.state.userAccount
         }).then((data: any) => {
+            console.log(JSON.stringify(data));
             Utils.setCookie("authorization", data.authorization);
             Utils.setSettings("userInfo", data);
             mui.fire(this.view.opener(), "login");
