@@ -89,6 +89,7 @@ export default class App extends Component<AppProps, AppState> {
             down: {
                 height: 150,
                 callback: function () {
+                    self.setState({ loading: true });
                     self.getChartData();
                     setTimeout(() => {
                         this.endPullDownToRefresh()

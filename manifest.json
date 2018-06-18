@@ -187,21 +187,21 @@
                 "ios": {
                     "iphone": {
                         "default": "",
-                        "retina35": "unpackage/res/splash/640x960@2x.png",
-                        "retina40": "unpackage/res/splash/640x1136.png",
-                        "retina55": "unpackage/res/splash/1242x2208.png",
-                        "retina47": "unpackage/res/splash/750x1334.png",
-                        "iphonex": "unpackage/res/splash/1242x2208.png",
-                        "iphonexl": "unpackage/res/splash/2208x1242.png",
-                        "retina55l": "unpackage/res/splash/2208x1242.png"
+                        "retina35": "unpackage/res/splash/iPhone 4S@2x.png",
+                        "retina40": "unpackage/res/splash/iPhone 7@2x.png",
+                        "retina55": "unpackage/res/splash/iPhone 7+@2x.png",
+                        "retina47": "unpackage/res/splash/iPhone 7@2x.png",
+                        "iphonex": "unpackage/res/splash/iPhone X@2x.png",
+                        "iphonexl": "unpackage/res/splash/iPhone X 横@2x.png",
+                        "retina55l": "unpackage/res/splash/iPhone 7+横@2x.png"
                     }
                 },
                 "android": {
                     "mdpi": "",
                     "ldpi": "",
-                    "hdpi": "unpackage/res/splash/480x800@2x.png",
-                    "xhdpi": "unpackage/res/splash/720x1280.png",
-                    "xxhdpi": "unpackage/res/splash/1080x1920.png"
+                    "hdpi": "unpackage/res/splash/Android1@2x.png",
+                    "xhdpi": "unpackage/res/splash/Android2@2x.png",
+                    "xxhdpi": "unpackage/res/splash/Android3@2x.png"
                 }
             }
         }
