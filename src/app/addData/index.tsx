@@ -12,6 +12,7 @@ interface AppState {
     fields: any[];
     loading: boolean;
     inputType: object;
+    virtualColAddVos: object;
 }
 
 export default class App extends Component<AppProps, AppState> {
@@ -23,7 +24,7 @@ export default class App extends Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.state = {
-            title: "", data: {}, loading: true, fields: [],
+            title: "", data: {}, loading: true, fields: [], virtualColAddVos: {},
             inputType: {
                 "901": "text",
                 "902": "number",
@@ -50,14 +51,15 @@ export default class App extends Component<AppProps, AppState> {
         let { id } = this.view.table;
         Service.getVirtualTableDetailById({ id }).then((data: any) => {
             this.initfieldsData(data.virtualColAddVos);
+            this.setState({ virtualColAddVos: data.virtualColAddVos });
             if (this.view.recordId) {
                 this.getRecordDetail(this.view.recordId);
             }
         }).catch(error => {
-            this.setState({ loading: false });
+            this.setState({ loading: false, });
         });
     }
-    initfieldsData(fieldsList: any[]) {
+    initfieldsData(fieldsList: any | object[]) {
         let fields = fieldsList.map(item => {
             let fieldsData: any = {
                 name: item.name,
@@ -107,8 +109,10 @@ export default class App extends Component<AppProps, AppState> {
         for (let i = 0; i < this.state.fields.length; i++) {
             const item = this.state.fields[i];
             if (item.required && !item.value) {
-                mui.toast(`${item.name}为必填项`)
-                return false;
+                return mui.toast(`${item.name}为必填项`);
+            }
+            if (item.type == "number" && !(/^\d+$/.test(item.value))) {
+                return mui.toast(`请填入正确的数值`);
             }
         }
         return true;
@@ -123,7 +127,7 @@ export default class App extends Component<AppProps, AppState> {
         return JSON.stringify(data);
     }
     async saveData(params) {
-        let tableId = params.virtualTableId;
+        // let tableId = params.virtualTableId;
         try {
             if (!this.view.recordId) {
                 await Service.serviceDataAdd(params);
@@ -136,18 +140,31 @@ export default class App extends Component<AppProps, AppState> {
         } catch (error) {
             mui.toast(`${this.view.recordId ? "更新" : "添加"}数据失败`);
         }
-        await Service.updateStateOrUseState({
-            state: 1003,
-            tableId
-        });
-        mui.fire(plus.webview.getWebviewById(this.view.table.viewId), "reloadData");
-        mui.back();
+        // await Service.updateStateOrUseState({
+        //     state: 1003,
+        //     tableId
+        // });
+        mui.later(() => {
+            mui.fire(plus.webview.getWebviewById(this.view.table.viewId), "reloadData");
+            plus.nativeUI.confirm(`${this.view.recordId ? "更新" : "添加"}成功，是否继续添加？`, ({ index }) => {
+                if (index == 0) {
+                    this.initfieldsData(this.state.virtualColAddVos);
+                } else {
+                    mui.fire(this.view.opener(), "refresh");
+                    mui.back();
+                }
+            });
+            plus.nativeUI.closeWaiting();
+        }, 500);
+
     }
-    handComplete() {
+    handComplete(ev) {
+        ev.target.focus();
         let isValidate = this.validate();
         if (isValidate) {
             plus.nativeUI.confirm(`确认${this.view.recordId ? "更新" : "添加"}？`, ({ index }) => {
                 if (index == 0) {
+                    plus.nativeUI.showWaiting(`${this.view.recordId ? "更新" : "添加"}中...`);
                     let value = this.formartData();
                     let { id } = this.view.table;
                     this.saveData({
@@ -186,7 +203,7 @@ export default class App extends Component<AppProps, AppState> {
                         )) : <div className="fields-noData">{loading ? "初始化中..." : "暂无字段信息"}</div>}
                         {fields.length > 0 && (
                             <div className="fields-btns">
-                                <div className="btn" {...{ onTap: () => Utils.openPage("addData", { table: this.view.table, createNew: true }) }}>继续添加</div>
+                                {/* <div className="btn" {...{ onTap: () => Utils.openPage("addData", { table: this.view.table, createNew: true }) }}>继续添加</div> */}
                                 <div className="btn block" {...{ onTap: this.handComplete.bind(this) }}>完成{this.view && this.view.recordId ? "编辑" : "添加"}</div>
                             </div>
                         )}

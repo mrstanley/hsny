@@ -16,6 +16,7 @@ interface AppState {
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
+    listener: Function;
     public view;
     constructor(props: AppProps) {
         super(props);
@@ -42,6 +43,9 @@ export default class App extends Component<AppProps, AppState> {
                     callback: this.pullupRefresh.bind(this)
                 }
             }
+        });
+        this.listener("refresh", (ev: Event) => {
+            this.pulldownRefresh();
         });
     }
     getTableList(params) {
@@ -94,7 +98,9 @@ export default class App extends Component<AppProps, AppState> {
                                 <div className="item">
                                     <div className="table-row table-row-title">
                                         <div className="table-col"> <label>第{index + 1}条记录</label> </div>
-                                        <div className="table-col"><span class="iconfont icon-edit mui-pull-right" {...{ onTap: () => this.handleEdit(item) }}></span></div>
+                                        <div className="table-col">
+                                            {item.state == 0 && <span class="iconfont icon-edit mui-pull-right" {...{ onTap: () => this.handleEdit(item) }}></span>}
+                                        </div>
                                     </div>
                                     <div className="table-row table-row-item">
                                         {Object.keys(values).map(field => (

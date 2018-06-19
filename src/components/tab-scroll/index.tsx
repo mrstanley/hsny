@@ -5,6 +5,7 @@ import { h, Component } from "preact";
 
 interface AppProps {
     children?
+    onCharShow?
 }
 interface AppState { }
 
@@ -22,7 +23,7 @@ export default class App extends Component<AppProps, AppState> {
             <div class="tab-scroll" id="tab-scroll">
                 <div class="mui-segmented-control mui-segmented-control-inverted">
                     <a class="mui-control-item mui-active" href="#item1">数据列表</a>
-                    <a class="mui-control-item" href="#item2">指标呈现</a>
+                    <a class="mui-control-item" {...{onTap: this.props.onCharShow}} href="#item2">指标呈现</a>
                 </div>
                 <div class="tab-wrap">
                     <div id="item1" class="mui-control-content mui-active">

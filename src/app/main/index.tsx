@@ -10,17 +10,20 @@ interface AppState {
     icons: any[];
     menus: object[];
     hasMenus: object[];
+    msgCount: number;
 }
 
 export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
     listener: Function;
+    timer
     constructor(props: AppProps) {
         super(props);
         this.mixins.forEach(m => Object.assign(this, m));
         this.state = {
             menus: [],
+            msgCount: 0,
             hasMenus: [],
             icons: [{}, {
                 icon: "icon-CB",
@@ -78,6 +81,9 @@ export default class App extends Component<AppProps, AppState> {
         } else {
             this.getCollectAreaList();
             this.getDict();
+            this.getMessage();
+            clearInterval(this.timer);
+            this.timer = setInterval(this.getMessage, 10000);
         }
     }
     componentDidMount() {
@@ -85,6 +91,20 @@ export default class App extends Component<AppProps, AppState> {
         this.listener("login", () => {
             this.getCollectAreaList();
             this.getDict();
+            this.getMessage();
+            clearInterval(this.timer);
+            this.timer = setInterval(this.getMessage, 10000);
+        });
+    }
+    getMessage() {
+        let userId = Utils.getSettings("userInfo").userId;
+        Service.getMessage({
+            query: `{msgs(acceptUserId:${userId},page:1,size:10,state:0){totalCount,pageData{queryAll}}}`
+        }).then((data: any) => {
+            if (data.msgs.length) {
+                let msgCount = data.msgs[0].totalCount;
+                this.setState({ msgCount });
+            }
         });
     }
     handleOpenPage(item: any) {
@@ -107,14 +127,16 @@ export default class App extends Component<AppProps, AppState> {
         }
     }
     render(props: AppProps, state: AppState) {
-        let { menus, icons, hasMenus } = state;
+        let { menus, icons, hasMenus, msgCount } = state;
         return (
             <div className="app-container main">
                 <header className="app-header">
                     <div className="title">数据与管理</div>
                     <div className="bar">
                         <i className="iconfont icon-mine" {...{ onTap: this.handleIsLogin.bind(this, "user") }}></i>
-                        <i className="iconfont icon-meg" {...{ onTap: this.handleIsLogin.bind(this, "message") }}></i>
+                        <i className="iconfont icon-meg" {...{ onTap: this.handleIsLogin.bind(this, "message") }}>
+                            {msgCount > 0 && <i class="num">{msgCount}</i>}
+                        </i>
                     </div>
                 </header>
                 <div className="mui-content">

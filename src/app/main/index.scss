@@ -23,6 +23,21 @@
                 font-size: .4rem;
                 margin-left: .61rem;
                 color: #757575;
+                position: relative;
+                .num {
+                    position: absolute;
+                    background-color: #5CC166;
+                    color: #ffffff;
+                    padding: 1px 5px;
+                    font-size: .2rem;
+                    top: -.1rem;
+                    right: -.2rem;
+                    display: inline-block;
+                    line-height: 0.28rem;
+                    height: 0.28rem;
+                    border-radius: .14rem;
+                    font-style: normal;
+                }
             }
         }
     }

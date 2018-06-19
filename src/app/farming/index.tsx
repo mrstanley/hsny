@@ -14,6 +14,7 @@ interface AppState {
     collectAreaId: string;
     farmingBase: any[];
     chartData: any;
+    charShow: boolean;
 }
 
 export default class App extends Component<AppProps, AppState> {
@@ -22,14 +23,13 @@ export default class App extends Component<AppProps, AppState> {
     public view;
     constructor(props: AppProps) {
         super(props);
-        this.state = { loading: true, collectAreaId: "", farmingBase: [], chartData: null };
+        this.state = { loading: true, collectAreaId: "", farmingBase: [], chartData: null, charShow: false };
         this.mixins.forEach(m => Object.assign(this, m));
         this.init(() => {
             let { collectAreaId } = this.view.params;
             this.setState({ collectAreaId });
             plus.navigator.setStatusBarStyle("light");
             Utils.hideScroll();
-            this.getChartData();
         });
     }
     async getChartData() {
@@ -54,34 +54,36 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleChart1(ref: HTMLElement, data) {
         let [titleText, value] = data;
-        setTimeout(() => echarts.init(ref).setOption({
-            title: {
-                text: titleText,
-                left: "center",
-                bottom: "4%",
-                textStyle: {
-                    color: '#999999',
-                    fontSize: 14
-                }
-            },
-            series: [{
-                name: '红实二号',
-                type: 'pie',
-                itemStyle: {
-                    color: "#7FCF5C"
+        setTimeout(() => {
+            echarts.init(ref).setOption({
+                title: {
+                    text: titleText,
+                    left: "center",
+                    bottom: "4%",
+                    textStyle: {
+                        color: '#999999',
+                        fontSize: 14
+                    }
                 },
-                center: ['50%', '40%'],
-                labelLine: {
-                    length: 3,
-                    length2: 12,
-                    smooth: true
-                },
-                data: [{
-                    value,
-                    name: Math.round(value * 100) + "%"
+                series: [{
+                    name: '红实二号',
+                    type: 'pie',
+                    itemStyle: {
+                        color: "#7FCF5C"
+                    },
+                    center: ['50%', '40%'],
+                    labelLine: {
+                        length: 3,
+                        length2: 12,
+                        smooth: true
+                    },
+                    data: [{
+                        value,
+                        name: Math.round(value * 100) + "%"
+                    }]
                 }]
-            }]
-        }), 0)
+            })
+        }, 500)
     }
     pullToRefresh(ref) {
         let self = this;
@@ -89,14 +91,19 @@ export default class App extends Component<AppProps, AppState> {
             down: {
                 height: 150,
                 callback: function () {
-                    self.setState({ loading: true });
                     self.getChartData();
                     setTimeout(() => {
-                        this.endPullDownToRefresh()
+                        this.endPullDownToRefresh();
                     }, 1000);
                 }
             }
         })
+    }
+    onCharShow() {
+        if (!this.state.charShow) {
+            this.getChartData();
+            this.setState({ charShow: true });
+        }
     }
     render(props: AppProps, state: AppState) {
         let { collectAreaId, loading, chartData } = state;
@@ -107,7 +114,7 @@ export default class App extends Component<AppProps, AppState> {
                     <h1 class="mui-title">农事活动管理</h1>
                 </header>
                 <div class="mui-content">
-                    <TabScroll>
+                    <TabScroll onCharShow={this.onCharShow.bind(this)}>
                         <Table collectAreaId={collectAreaId}></Table>
                         <div className="chart">
                             {!loading && chartData && (

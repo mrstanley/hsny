@@ -111,19 +111,18 @@ export default class App extends Component<AppProps, AppState> {
         }
     }
     async dataUpLoad(params) {
-        try {
-            await Service.serviceDataUpload(params);
+        let update = Service.serviceDataUpload(params).then(() => {
             mui.fire(plus.webview.currentWebview(), "reloadData");
             plus.nativeUI.closeWaiting();
-            mui.toast("上传成功");
-        } catch (error) {
+        }).catch(error => {
             plus.nativeUI.closeWaiting();
-            mui.toast("上传失败");
-        }
-        await Service.updateStateOrUseState({
-            state: 1002,
-            tableId: params.tableId
-        });
+            mui.toast("上传错误");
+        })
+        await update;
+        // await Service.updateStateOrUseState({
+        //     state: 1002,
+        //     tableId: params.tableId
+        // });
     }
     handleUpload(data) {
         if (data.state == 1003) {
