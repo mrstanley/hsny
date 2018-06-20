@@ -96,15 +96,17 @@ export default class App extends Component<AppProps, AppState> {
         });
     }
     getMessage() {
-        let userId = Utils.getSettings("userInfo").userId;
-        Service.getMessage({
-            query: `{msgs(acceptUserId:${userId},page:1,size:10,state:0){totalCount,pageData{queryAll}}}`
-        }).then((data: any) => {
-            if (data.msgs.length) {
-                let msgCount = data.msgs[0].totalCount;
-                this.setState({ msgCount });
-            }
-        });
+        if (Utils.getCookie("authorization")) {
+            let userId = Utils.getSettings("userInfo").userId;
+            Service.getMessage({
+                query: `{msgs(acceptUserId:${userId},page:1,size:10,state:0){totalCount,pageData{queryAll}}}`
+            }).then((data: any) => {
+                if (data.msgs.length) {
+                    let msgCount = data.msgs[0].totalCount;
+                    this.setState({ msgCount });
+                }
+            });
+        }
     }
     handleOpenPage(item: any) {
         let { name } = this.state.icons[item.id];

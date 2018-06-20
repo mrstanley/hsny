@@ -5,6 +5,7 @@ export function notice(code, content) {
         case 401:
             mui.toast("登录已过期，请重新登陆", { duration: 3 });
             Utils.openPage("login", { from: { barStyle: "dark" } });
+            Utils.setCookie("authorization", null);
             break;
         case 403:
             mui.toast(content || "无访问权限", { duration: 3 });
