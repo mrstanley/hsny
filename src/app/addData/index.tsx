@@ -162,16 +162,12 @@ export default class App extends Component<AppProps, AppState> {
         ev.target.focus();
         let isValidate = this.validate();
         if (isValidate) {
-            plus.nativeUI.confirm(`确认${this.view.recordId ? "更新" : "添加"}？`, ({ index }) => {
-                if (index == 0) {
-                    plus.nativeUI.showWaiting(`${this.view.recordId ? "更新" : "添加"}中...`);
-                    let value = this.formartData();
-                    let { id } = this.view.table;
-                    this.saveData({
-                        value,
-                        virtualTableId: id
-                    });
-                }
+            plus.nativeUI.showWaiting(`${this.view.recordId ? "更新" : "添加"}中...`);
+            let value = this.formartData();
+            let { id } = this.view.table;
+            this.saveData({
+                value,
+                virtualTableId: id
             });
         }
     }

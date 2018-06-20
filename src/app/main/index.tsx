@@ -79,21 +79,20 @@ export default class App extends Component<AppProps, AppState> {
         if (!Utils.getCookie("authorization")) {
             Utils.openPage("login", { from: { barStyle: "dark", name: "main" } });
         } else {
-            this.getCollectAreaList();
-            this.getDict();
-            this.getMessage();
-            clearInterval(this.timer);
-            this.timer = setInterval(this.getMessage, 10000);
+            this.getData();
         }
+    }
+    getData() {
+        this.getCollectAreaList();
+        this.getDict();
+        this.getMessage();
+        clearInterval(this.timer);
+        this.timer = setInterval(this.getMessage.bind(this), 10000);
     }
     componentDidMount() {
         Utils.setImmersed();
         this.listener("login", () => {
-            this.getCollectAreaList();
-            this.getDict();
-            this.getMessage();
-            clearInterval(this.timer);
-            this.timer = setInterval(this.getMessage, 10000);
+            this.getData();
         });
     }
     getMessage() {

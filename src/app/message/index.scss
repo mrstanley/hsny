@@ -22,6 +22,9 @@
             .desc {
                 margin-top: 0.3rem;
                 line-height: 0.4rem;
+                .mui-badge {
+                    margin-right: .1rem;
+                }
             }
             &::after {
                 content: " ";

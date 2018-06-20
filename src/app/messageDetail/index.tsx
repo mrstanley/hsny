@@ -24,6 +24,7 @@ export default class App extends Component<AppProps, AppState> {
                 query: `{msg(id:${msgId}){queryAll}}`
             }).then((data: any) => {
                 this.setState({ msg: data.msg });
+                mui.fire(this.view.opener(), "changeState", { index: this.view.index });
             });
         });
     }

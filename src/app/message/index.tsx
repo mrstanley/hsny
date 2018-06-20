@@ -16,6 +16,7 @@ export default class App extends Component<AppProps, AppState> {
     mixins = [Mixins];
     init: Function;
     public userInfo
+    public listener;
     constructor(props: AppProps) {
         super(props);
         this.state = { count: 0, list: [], page: 0 };
@@ -44,6 +45,10 @@ export default class App extends Component<AppProps, AppState> {
                     callback: this.pullupRefresh.bind(this)
                 }
             }
+        });
+        this.listener("changeState", (ev: any) => {
+            let { index } = ev.detail;
+            this.updateFieldsData(index, { state: 1 });
         });
     }
     getMessages(params) {
@@ -79,6 +84,12 @@ export default class App extends Component<AppProps, AppState> {
             });
         }, 1000);
     }
+    // 封装数据更新工具函数
+    updateFieldsData(index, data) {
+        let list = this.state.list;
+        let fields = [...list.slice(0, index), { ...list[index], ...data }, ...list.slice(index + 1)];
+        this.setState({ list: fields });
+    }
     render(props: AppProps, state: AppState) {
         return (
             <div className="app-container message">
@@ -88,13 +99,16 @@ export default class App extends Component<AppProps, AppState> {
                 </header>
                 <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
                     <div class="mui-scroll">
-                        {state.list.map((item: any) => (
-                            <div className="item" {...{ onTap: () => Utils.openPage("messageDetail", { msgId: item.id }) }}>
+                        {state.list.map((item: any, index: number) => (
+                            <div className="item" {...{ onTap: () => Utils.openPage("messageDetail", { msgId: item.id, index: index }) }}>
                                 <div className="title">
                                     <h3>{item.title}</h3>
                                     <span className="time">{item.createTime.split(".")[0]}</span>
                                 </div>
-                                <p className="desc">{item.content}</p>
+                                <p className="desc">
+                                    {item.state == 0 ? <span class="mui-badge mui-badge-danger">未读</span> : <span class="mui-badge mui-badge-success">已读</span>}
+                                    {item.content}
+                                </p>
                             </div>
                         ))}
                     </div>
