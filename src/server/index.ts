@@ -42,7 +42,8 @@ let getTableData = {
         return fetch('post', `${REMOTE}/virtualTable/list/${page}/10`, params);
     },
     getVirtualTableDetailById: params => fetch('get', `${REMOTE}/virtualTable/detailById?id=${params.id}`),
-    appPersonCenterStatictics: params => fetch('get', `${REMOTE}/virtualTable/appPersonCenterStatictics`)
+    appPersonCenterStatictics: params => fetch('get', `${REMOTE}/virtualTable/appPersonCenterStatictics`),
+    getTableDesc: params => fetch('get', `${REMOTE}/virtualTable/detailById?id=${params.id}`)
 };
 
 // 可视化统计图表(指标呈现)

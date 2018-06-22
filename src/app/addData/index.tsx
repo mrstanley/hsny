@@ -178,6 +178,7 @@ export default class App extends Component<AppProps, AppState> {
                 <header id="header" class="mui-bar mui-bar-nav">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
                     <h1 class="mui-title">{this.view && this.view.recordId ? "编辑" : "添加"}表数据</h1>
+                    <span class="iconfont icon-wenhao mui-pull-right" {...{ onTap: () => Utils.openPage("tableHelp", { table: this.view.table }) }}></span>
                 </header>
                 <div className="mui-content">
                     <div className="fields">
