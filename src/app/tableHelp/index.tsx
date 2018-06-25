@@ -24,7 +24,7 @@ export default class App extends Component<AppProps, AppState> {
         });
     }
     getData() {
-        Service.getTableDesc({ id: this.view.table.id }).then((data: any) => {
+        Service.getTableDesc({ id: this.view.table.parentTableId }).then((data: any) => {
             this.setState({ description: data.description });
         })
     }
@@ -37,7 +37,7 @@ export default class App extends Component<AppProps, AppState> {
             <div className="app-container tableHelp">
                 <header id="header" class="mui-bar mui-bar-nav">
                     <span class="mui-action-back iconfont icon-back mui-pull-left"></span>
-                    <h1 class="mui-title">数据表相关信息</h1>
+                    <h1 class="mui-title">填写说明</h1>
                 </header>
                 <div className="mui-content">
                     <div className="tableHelp-context" dangerouslySetInnerHTML={{ __html: description || '暂无内容' }}></div>
