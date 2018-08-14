@@ -3,8 +3,8 @@
     "id": "H5F1BFE2E",
     "name": "华胜农业",
     "version": {
-        "name": "0.0.1",
-        "code": "83"
+        "name": "0.0.4",
+        "code": "84"
     },
     "description": "",
     "icons": {
@@ -93,7 +93,7 @@
         },
         "NativeObj": {
             "description": "原生对象"
-        },"Maps":{},"Share":{},"Payment":{}
+        }
     },
     "plus": {
         "hardwareAccelerated": true,
@@ -111,30 +111,18 @@
         "signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",
         "distribute": {
             "plugins": {
+                "push": {
+
+                },
                 "share": {
-                    "weixin": {
-                        "appid": "wx64f8e3212b61b207",
-                        "appsecret": "3d791bf32929d0f03d0d8a0668636dae",
-                        "description": "可选，微信分享"
-                    }
+
                 },
                 "payment": {
-                    "weixin": {
-                        "description": "微信支付",
-                        "appid": "wx64f8e3212b61b207"
-                    },
-                    "alipay": {
-                        "description": "阿里支付",
-                        "scheme": ""
-                    }
+
+
                 },
                 "maps": {
-                    "baidu": {
-                        "appkey_ios": "mSt4eQYwNmX6vyWHggm5nzhzpOufGqks",
-                        "appkey_android": "mx1e8q1FNbLX9kjmtTIWGeSgaNRfTqmy",
-                        "appkey": "",
-                        "description": ""
-                    }
+
                 }
             },
             "apple": {
@@ -143,19 +131,34 @@
                 "password": "",
                 "p12": "",
                 "devices": "universal",
-                "frameworks": []
+                "frameworks": [],
+                "plistcmds": [
+                    "Set :NSPhotoLibraryUsageDescription 获取相册图片用于设置用户头像",
+                    "Set :NSCameraUsageDescription 获取相机用于设置用户头像",
+                    "Set :NSPhotoLibraryAddUsageDescription 向用户相册添加图片用于保存图片"
+                ]
             },
             "google": {
                 "packagename": "",
                 "keystore": "",
                 "password": "",
                 "aliasname": "",
-                "permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>", "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>", "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>", "<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>", "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>", "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>", "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>", "<uses-permission android:name=\"android.permission.INTERNET\"/>", "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>", "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>", "<uses-permission android:name=\"android.permission.VIBRATE\"/>", "<uses-permission android:name=\"android.permission.READ_LOGS\"/>", "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>", "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>", "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>", "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>", "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>", "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>", "<uses-feature android:name=\"android.hardware.camera\"/>", "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>", "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>", "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>", "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>", "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>", "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>", "<uses-permission android:name=\"android.permission.CAMERA\"/>"]
+                "permissions": ["<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>", "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>", "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>", "<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>", "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>", "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>", "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>", "<uses-feature android:name=\"android.hardware.camera\"/>", "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>", "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>", "<uses-permission android:name=\"android.permission.CAMERA\"/>"]
             },
             "orientation": ["portrait-primary", "portrait-secondary"],
             "icons": {
                 "ios": {
-                    "ipad": { "app": "unpackage/res/icons/76x76.png", "app@2x": "unpackage/res/icons/152x152.png", "settings": "unpackage/res/icons/29x29.png", "proapp@2x": "unpackage/res/icons/167x167.png", "spotlight": "unpackage/res/icons/40x40.png", "settings@2x": "unpackage/res/icons/58x58.png", "spotlight@2x": "unpackage/res/icons/80x80.png", "notification": "unpackage/res/icons/20x20.png", "notification@2x": "unpackage/res/icons/40x40.png" },
+                    "ipad": {
+                        "app": "unpackage/res/icons/76x76.png",
+                        "app@2x": "unpackage/res/icons/152x152.png",
+                        "settings": "unpackage/res/icons/29x29.png",
+                        "proapp@2x": "unpackage/res/icons/167x167.png",
+                        "spotlight": "unpackage/res/icons/40x40.png",
+                        "settings@2x": "unpackage/res/icons/58x58.png",
+                        "spotlight@2x": "unpackage/res/icons/80x80.png",
+                        "notification": "unpackage/res/icons/20x20.png",
+                        "notification@2x": "unpackage/res/icons/40x40.png"
+                    },
                     "prerendered": true,
                     "iphone": {
                         "normal": "",
@@ -186,9 +189,9 @@
             "splashscreen": {
                 "ios": {
                     "iphone": {
-                        "default": "",
+                        "default": "unpackage/res/splash/iPhone 4S@2x.png",
                         "retina35": "unpackage/res/splash/iPhone 4S@2x.png",
-                        "retina40": "unpackage/res/splash/iPhone 7@2x.png",
+                        "retina40": "unpackage/res/splash/640x1136@2x.png",
                         "retina55": "unpackage/res/splash/iPhone 7+@2x.png",
                         "retina47": "unpackage/res/splash/iPhone 7@2x.png",
                         "iphonex": "unpackage/res/splash/iPhone X@2x.png",

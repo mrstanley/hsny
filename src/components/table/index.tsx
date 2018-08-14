@@ -126,7 +126,7 @@ export default class App extends Component<AppProps, AppState> {
     }
     handleUpload(data) {
         if (data.state == 1003) {
-            plus.nativeUI.confirm('确认上传？', ({ index }) => {
+            plus.nativeUI.confirm('上传后数据将无法再次编辑，是否确认上传', ({ index }) => {
                 if (index == 0) {
                     plus.nativeUI.showWaiting("上传中...");
                     this.dataUpLoad({
